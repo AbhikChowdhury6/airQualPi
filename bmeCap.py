@@ -61,9 +61,15 @@ keys = ["responsiblePartyName", "instanceName", "developingPartyName", "deviceNa
 # and send it
 # let's leave any packets unbundled (the only reason to bundle is to save on redifining time stamps)
 
-#later if we have like IMU data that is entagled, we can bundle it
+# later if we have like IMU data that is entagled, we can bundle it
+# 9 axis sensor readings seems alright
+# or data where streams might affect other sensor readings?
+# mpu6050 and temp? that seems like a bit much
 
-#package 1 sec of updates and send it to 
+#the only thing is that the abc1 codec so far doesn't really do sparsity that well
+#lierally unbundle it if there's any difference in sample rate, that's the real takeaway 
+
+#package 1 sec of updates and send it to write or over the network
 
 # Determine the max update rate for loop timing
 max_rate = max(sensor.update_rate for sensor in sensors)
