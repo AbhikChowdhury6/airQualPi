@@ -12,6 +12,8 @@ class CircularTimeSeriesBuffers:
         #   first dimenstion is the number of samples per buffer
         #   subsequent dimensions are the shape the data
         #print("initializing")
+        self.numBuffs = torch.zeros(1, dtype=torch.int32).share_memory_()
+        self.numBuffs[0] = numBuffs
         self.size = torch.zeros(1, dtype=torch.int32).share_memory_()
         self.size[0] = shape[0]  # Number of time steps
         self.lastbn = torch.zeros(1, dtype=torch.int32).share_memory_()
