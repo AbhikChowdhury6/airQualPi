@@ -54,22 +54,20 @@ keys = ["responsiblePartyName", "instanceName", "developingPartyName", "deviceNa
 # from the writing and filtering
 
 # we could have the write worker process in the class too, now that's something to think about
-# not to over optimize, but the polling on the writer/ send process to reduce latency is a question
-# but let's just get the write process to check every second
-# and let's get it to write the data to message pack
-# at the end of the day let's covert it, in this case to a df, later to a .abc1, for each sensor
-# and send it
-# let's leave any packets unbundled (the only reason to bundle is to save on redifining time stamps)
-
-# later if we have like IMU data that is entagled, we can bundle it
-# 9 axis sensor readings seems alright
-# or data where streams might affect other sensor readings?
-# mpu6050 and temp? that seems like a bit much
-
-#the only thing is that the abc1 codec so far doesn't really do sparsity that well
-#lierally unbundle it if there's any difference in sample rate, that's the real takeaway 
+# lierally unbundle it if there's any difference in sample rate8
+# also just unbundle everything that won't usually be used together
 
 #package 1 sec of updates and send it to write or over the network
+
+
+# why do i even need a main loop?, ah yes to make sure my busses are ok
+# so yes, all this file will handle is using the busses to grab data (and write it in case of the screen)
+# I wish the captures could happen in parallel for every interface too
+#   camera
+#   i2c
+#   spi 
+
+
 
 # Determine the max update rate for loop timing
 max_rate = max(sensor.update_rate for sensor in sensors)
