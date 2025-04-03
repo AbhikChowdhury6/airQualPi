@@ -46,7 +46,24 @@ sensors = [
 
 keys = ["responsiblePartyName", "instanceName", "developingPartyName", "deviceName", "dataType", "dataSource"]
 # what are my descriptors going to look like?
-['abhik', '']
+['abhik', 'testing', 'Bosch', 'BME280', 'airTemp-C', 'internal']
+['abhik', 'testing', 'Bosch', 'BME280', 'relativeHumidity', 'internal']
+['abhik', 'testing', 'Bosch', 'BME280', 'pressure-hpa', 'internal']
+
+# for each of these objects I would like a circular time series buffer to separate the cap
+# from the writing and filtering
+
+# we could have the write worker process in the class too, now that's something to think about
+# not to over optimize, but the polling on the writer/ send process to reduce latency is a question
+# but let's just get the write process to check every second
+# and let's get it to write the data to message pack
+# at the end of the day let's covert it, in this case to a df, later to a .abc1, for each sensor
+# and send it
+# let's leave any packets unbundled (the only reason to bundle is to save on redifining time stamps)
+
+#later if we have like IMU data that is entagled, we can bundle it
+
+#package 1 sec of updates and send it to 
 
 # Determine the max update rate for loop timing
 max_rate = max(sensor.update_rate for sensor in sensors)
