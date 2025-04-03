@@ -23,8 +23,8 @@ def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames, d
         day_file_name = '/home/pi/Documents/dayData' + "_".join(deviceDescriptor) + "_" +\
                         newTimestamps[0].strftime('%Y-%m-%d%z') + '.csv'
         
-
-        headers = ['sampleDT'] + colNames
+        # other popular types float64, int 64, float32, int32
+        headers = ['sampleDT!datetime64[ns]'] + colNames
         with open(day_file_name, "a", newline="") as f:
             writer = csv.writer(f)
             if not file_exists:  # Write headers only if file is new
