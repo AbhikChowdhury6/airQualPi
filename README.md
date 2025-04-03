@@ -14,17 +14,33 @@ the object defintion would look something like this
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
 
-            }, 'relativeHumidity': {
+            },
+            'relativeHumidity': {
                 'update_rate': 1,
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
-            }, 'pressure-pa': {
+            },
+            'pressure-pa': {
                 'update_rate': 16,
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
             },
+        }
+    },
+    "ssd1306_testing": {
+        'responsiblePartyName': 'abhik',
+        'manufacturer': 'adafruit',
+        'outputs': {
+            'screen': {
+                'recording_vid': int32 mem obj init at 0,
+                'recording_audio': int32 mem obj init at 0,
+                'screen_switch': int32 mem obj init at 0,
+                'debug_lvl': int32 mem obj init at 0,
+                'end-signal': int32 mem obj init at 0,
+                'uptime': int32 mem obj init at 0
+            }
         }
     }
 }
@@ -42,7 +58,7 @@ remember only add params I would immediately like to configure or are needed for
                 'presence': int32 mem obj init at 0,
                 'cam_switch': int32 mem obj init at 0,
                 'detect_img': int8 mem obj of size 480x360x3 init at 0,
-                'recording': int32 mem obj init at 0,
+                'recording_vid': int32 mem obj init at 0,
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
@@ -63,6 +79,43 @@ for the model
                 'noRecTresh': 8
                 'presence': int32 mem obj init at 0,
                 'detect_img': int8 mem obj of size 480x360x3 init at 0,
+                'debug_lvl': int32 mem obj init at 0,
+                'end-signal': int32 mem obj init at 0,
+                'uptime': int32 mem obj init at 0
+            }
+        }
+    }
+}
+
+for the gpio
+{
+    'switch_instanceName':{
+        'responsiblePartyName': 'abhik',
+        'manufacturer': 'unknown',
+        'sensors': {
+            'cam_switch': {
+                'plus_pin': X,
+                'sense_pin': X,
+                'gnd_pin': X,
+                'cam_switch': int32 mem obj init at 0,
+                'debug_lvl': int32 mem obj init at 0,
+                'end-signal': int32 mem obj init at 0,
+                'uptime': int32 mem obj init at 0
+            },
+            'audio_switch': {
+                'plus_pin': X,
+                'sense_pin': X,
+                'gnd_pin': X,
+                'audio_switch': int32 mem obj init at 0,
+                'debug_lvl': int32 mem obj init at 0,
+                'end-signal': int32 mem obj init at 0,
+                'uptime': int32 mem obj init at 0
+            },
+            'screen_switch': {
+                'plus_pin': X,
+                'sense_pin': X,
+                'gnd_pin': X,
+                'screen_switch': int32 mem obj init at 0,
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
