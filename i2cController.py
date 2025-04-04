@@ -27,10 +27,12 @@ from datetime import datetime
 def I2C_BUS(bus_descriptor, debug_lvl, heart_beat, exitSignal):
 
     # init a bus using smbus2
+    I2C_BUS = SMBus(1)
 
     # we'll have to instantiate an object for each device
     # those objects will spawn their writers on init
     # they'll pass back a list of get data functions, and the max update hz
+    # and they'll pass back the write workers to check is alive on
 
     # we'll loop based on the max update hz of all the devices
     # when called they'll use the current timestamp to decide to 

@@ -9,7 +9,7 @@ the object defintion would look something like this
         'manufacturer': 'Bosch',
         'sensors': {
             'temp-c': {
-                'update_rate': 1,
+                'hz': 1,
                 'col_names': ['temp-c!float32'],
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
@@ -17,14 +17,14 @@ the object defintion would look something like this
 
             },
             'relativeHumidity': {
-                'update_rate': 1,
+                'hz': 1,
                 'col_names': ['relativeHumidity!float32'],
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
             },
             'pressure-pa': {
-                'update_rate': 16,
+                'hz': 16,
                 'col_names': ['pressure-pa!int32'],
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,

@@ -7,7 +7,7 @@ import sys
 # make num buffers dynamic
 # let's use 5 1 second buffers to be safe and make sure we're not losing anything
 class CircularTimeSeriesBuffers:
-    def __init__(self, length, DTYPE, numBuffs = 5):
+    def __init__(self, hz, DTYPE, length=1, numBuffs = 5):
         # shape is a tuple where
         #   first dimenstion is the number of samples per buffer
         #   subsequent dimensions are the shape the data
