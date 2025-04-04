@@ -1,3 +1,6 @@
+from smbus2 import SMBus
+import time
+from datetime import datetime
 #alright so I'll be making a class??
 # that takes in a dictonary????
 # creates shared memory buffers for 1 seocnd of the data??
@@ -17,3 +20,19 @@
 # the os will move all the df's at the end of the day + 1 hour
 
 # the storage server will integrate the data into the dataset
+
+# we also don't have to complicate things yet by solving the each field
+# per sensorwe could just define a new object with all the data it needs
+
+def I2C_BUS(bus_descriptor, debug_lvl, heart_beat, exitSignal):
+
+    # init a bus using smbus2
+
+    # we'll have to instantiate an object for each device
+    # those objects will spawn their writers on init
+    # they'll pass back a list of get data functions, and the max update hz
+
+    # we'll loop based on the max update hz of all the devices
+    # when called they'll use the current timestamp to decide to 
+
+    pass

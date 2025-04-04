@@ -10,6 +10,7 @@ the object defintion would look something like this
         'sensors': {
             'temp-c': {
                 'update_rate': 1,
+                'col_names': ['temp-c!float32'],
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
@@ -17,12 +18,14 @@ the object defintion would look something like this
             },
             'relativeHumidity': {
                 'update_rate': 1,
+                'col_names': ['relativeHumidity!float32'],
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
             },
             'pressure-pa': {
                 'update_rate': 16,
+                'col_names': ['pressure-pa!int32'],
                 'debug_lvl': int32 mem obj init at 0,
                 'end-signal': int32 mem obj init at 0,
                 'uptime': int32 mem obj init at 0
@@ -55,6 +58,7 @@ remember only add params I would immediately like to configure or are needed for
         'manufacturer': 'abhik',
         'sensors': {
             'video': {
+                'col_names': ['vid-idx!int32'],
                 'presence': int32 mem obj init at 0,
                 'cam_switch': int32 mem obj init at 0,
                 'detect_img': int8 mem obj of size 480x360x3 init at 0,
@@ -67,7 +71,7 @@ remember only add params I would immediately like to configure or are needed for
     }
 }
 
-
+we can just modify the vid write worker to do this writing
 for the model
 {
     'deviceName-yoloPerson_instanceName':{
@@ -75,6 +79,7 @@ for the model
         'manufacturer': 'ultralytics',
         'sensors': {
             'presence': {
+                'col_names': ['presence-bool!int32'],
                 'model': 'yolo11x.pt'
                 'noRecTresh': 8
                 'presence': int32 mem obj init at 0,
