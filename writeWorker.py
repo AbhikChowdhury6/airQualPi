@@ -3,8 +3,9 @@ from datetime import datetime, timedelta, timezone
 import msgpack
 
 
-def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames, debug_lvl, exitSignal):
-    # all this should do is message pack the last second
+def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
+                  heart_beat, debug_lvl, exitSignal):
+    # all this should do is save the last second
     def intTensorToDtList(tensor):
         return [datetime.fromtimestamp(ts_ns.item() / 1e9, tz=timezone.utc) for ts_ns in tensor]
 
@@ -23,7 +24,7 @@ def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames, d
         day_file_name = '/home/pi/Documents/dayData' + "_".join(deviceDescriptor) + "_" +\
                         newTimestamps[0].strftime('%Y-%m-%d%z') + '.csv'
         
-        # other popular types float64, int 64, float32, int32
+        # other popular types float64, int64, float32, int32
         headers = ['sampleDT!datetime64[ns]'] + colNames
         with open(day_file_name, "a", newline="") as f:
             writer = csv.writer(f)
@@ -32,8 +33,5 @@ def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames, d
             
             for i, data in enumerate(ctsb.data_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]]):
                 writer.writerow([newTimestamps[i].isoformat()] + data)
-
-        
-        
-
-    pass
+            
+        #honestly we could just have a cron job clean up and do the pandas conversions

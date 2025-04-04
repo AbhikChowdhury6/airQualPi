@@ -7,7 +7,7 @@ import sys
 # make num buffers dynamic
 # let's use 5 1 second buffers to be safe and make sure we're not losing anything
 class CircularTimeSeriesBuffers:
-    def __init__(self, shape, DTYPE, numBuffs):
+    def __init__(self, length, DTYPE, numBuffs):
         # shape is a tuple where
         #   first dimenstion is the number of samples per buffer
         #   subsequent dimensions are the shape the data
@@ -15,14 +15,14 @@ class CircularTimeSeriesBuffers:
         self.numBuffs = torch.zeros(1, dtype=torch.int32).share_memory_()
         self.numBuffs[0] = numBuffs
         self.size = torch.zeros(1, dtype=torch.int32).share_memory_()
-        self.size[0] = shape[0]  # Number of time steps
+        self.size[0] = hz 
         self.lastbn = torch.zeros(1, dtype=torch.int32).share_memory_()
         self.bn = torch.zeros(1, dtype=torch.int32).share_memory_()
 
         # Shared memory buffers
         self.nextidxs = torch.zeros((numBuffs,1), dtype=torch.int32).share_memory_()  # Most recent index (insertion point)
         self.lengths = torch.zeros((numBuffs,1), dtype=torch.int32).share_memory_()
-        self.data_buffers = torch.zeros((numBuffs,) + shape, dtype=DTYPE).share_memory_()
+        self.data_buffers = torch.zeros((numBuffs, hz, length), dtype=DTYPE).share_memory_()
         self.time_buffers = torch.zeros((numBuffs, self.size[0]), dtype=torch.int64).share_memory_()
         #print("initialized")
         sys.stdout.flush()
