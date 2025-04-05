@@ -1,7 +1,6 @@
 from smbus2 import SMBus
 import time
-from datetime import datetime
-from abme280 import aBME280
+from datetime import datetime, timedelta
 
 # at the end of the day it'll spawn a process to convert the message thing to a df
 #   it can spawn it at a random minute offset between 1 and 55
@@ -43,18 +42,33 @@ def I2C_BUS(bus_descriptor, debug_lvl, heart_beat, exitSignal):
             debug_lvl
         )
         self.devices.append(newDevice)
-        self.sensors = self.sensors + newDevice.sensors
+        self.sensors += newDevice.sensors
 
-    max_hz = max(s.hz for s in sensors)
 
-    while True:
-        pass
-    # we'll have to instantiate an object for each device
-    # those objects will spawn their writers on init
-    # they'll pass back a list of get data functions, and the max update hz
-    # and they'll pass back the write workers to check is alive on
+    min_delay = min(s.delay for s in sensors)  # timedelta object
+    delay_secs = min_delay.total_seconds()
 
-    # we'll loop based on the max update hz of all the devices
-    # when called they'll use the current timestamp to decide to 
+    # Align to the next full second
+    now = datetime.now()
+    aligned_start = now.replace(microsecond=0) + timedelta(seconds=1)
+    time_to_sleep = (aligned_start - now).total_seconds()
+    time.sleep(time_to_sleep)
 
-    pass
+    # Start loop
+    next_time = datetime.now()
+    while not exitSignal.value:
+        for sensor in sensors:
+            sensor.read_data()
+
+        # Set next time, aligned to the delay grid
+        next_time += min_delay
+        now = datetime.now()
+        sleep_duration = (next_time - now).total_seconds()
+
+        if sleep_duration > 0:
+            time.sleep(sleep_duration)
+        else:
+            if debug_lvl > 0:
+                print(f"[WARNING] Loop overran by {-sleep_duration:.3f} seconds")
+            next_time = datetime.now()  # Reset so drift doesn't accumulate
+
