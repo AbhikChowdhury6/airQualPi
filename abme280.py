@@ -41,12 +41,12 @@ class aBME280:
     def __init__(self, bus, descriptor, debug_lvl):
         self.bme280 = BME280(i2c_dev=bus)
         retrieve_datas = {'temp-c': self.bme280.get_temperature,
-                     'relativeHumidity': self.bme280.get_humidity,
-                     'pressure-pa': self.bme280.get_pressure}
+                            'relativeHumidity': self.bme280.get_humidity,
+                            'pressure-pa': self.bme280.get_pressure}
 
 
         sensor_descriptors = descriptor['sensors']
-        sensors = []
+        self.sensors = []
         for s in sensor_descriptors:
             dd = [descriptor['responsiblePartyName'],
                 descriptor['instanceName'],
@@ -56,7 +56,5 @@ class aBME280:
                 'internal']
             sensor = sensor(sensor_descriptors[s], retrieve_datas[s], dd, debug_lvl)
             sensors.append(sensor)
-        
-        return sensors
 
         

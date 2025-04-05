@@ -5,7 +5,8 @@ lets start with i2c
 the object defintion would look something like this
 sensors
 {
-    "bme280_testing": {
+    "abme280": {
+        'class_name':' aBME280
         'responsiblePartyName': 'abhik',
         'instanceName': 'testing',
         'manufacturer': 'Bosch',
