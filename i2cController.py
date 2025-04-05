@@ -1,6 +1,7 @@
 from smbus2 import SMBus
 import time
 from datetime import datetime
+from abme280 import aBME280
 #alright so I'll be making a class??
 # that takes in a dictonary????
 # creates shared memory buffers for 1 seocnd of the data??
@@ -28,6 +29,9 @@ def I2C_BUS(bus_descriptor, debug_lvl, heart_beat, exitSignal):
 
     # init a bus using smbus2
     I2C_BUS = SMBus(1)
+    sesnors = []
+    for device in bus_descriptor
+    sensors.append()
 
     # we'll have to instantiate an object for each device
     # those objects will spawn their writers on init

@@ -4,7 +4,7 @@ import msgpack
 
 
 def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
-                  heart_beat, debug_lvl, exitSignal):
+                   debug_lvl, exitSignal):
     # all this should do is save the last second
     def intTensorToDtList(tensor):
         return [datetime.fromtimestamp(ts_ns.item() / 1e9, tz=timezone.utc) for ts_ns in tensor]

@@ -3,9 +3,11 @@ so some notes on main
 
 lets start with i2c
 the object defintion would look something like this
+sensors
 {
     "bme280_testing": {
         'responsiblePartyName': 'abhik',
+        'instanceName': 'testing',
         'manufacturer': 'Bosch',
         'sensors': {
             'temp-c': {
@@ -31,7 +33,11 @@ the object defintion would look something like this
                 'uptime': int32 mem obj init at 0
             },
         }
-    },
+    }
+}
+
+outputs
+{
     "ssd1306_testing": {
         'responsiblePartyName': 'abhik',
         'manufacturer': 'adafruit',
