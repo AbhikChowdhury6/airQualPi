@@ -81,9 +81,9 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
                 print(f"[WARNING] Loop overran by {-sleep_duration:.3f} seconds")
             next_time = datetime.now()  # Reset so drift doesn't accumulate
         
-print('i2c waiting 3 seconds for writers to exit')
-time.sleep(3)
-print('i2c exiting')  
+    print('i2c waiting 3 seconds for writers to exit')
+    time.sleep(3)
+    print('i2c exiting')  
 
 
 
