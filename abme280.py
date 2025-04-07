@@ -25,7 +25,7 @@ class sensor:
 
         self.write_exit_signal = torch.zeros(1, dtype=torch.int32).share_memory_()
         writeArgs = [self.buffer, self.dd, self.config['col_names'], self.debug_lvl, self.write_exit_signal]
-        self.write_process = mp.Process(target=write_worker, args=(*writeArgs))
+        self.write_process = mp.Process(target=write_worker, args=((*writeArgs,)))
         self.write_process.start()
 
         self.retrive_after = datetime.fromtimestamp(0, tz=timezone.utc)
