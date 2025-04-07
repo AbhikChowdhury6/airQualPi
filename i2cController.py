@@ -62,11 +62,12 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
     while True:
         for sensor in sensors:
             sensor.read_data()
-        
-        if exitSignal[0]:
+
+        if any(not s.write_process.is_alive() for s in sensors) or exitSignal[0]:
             print('sending write exit signals to i2c sensors')
-            for sensor in sensors:
-                sensor.write_exit_signal = 1
+            for s in sensors:
+                print("_".join(s.dd), processes[p].is_alive())
+                s.write_exit_signal = 1
             break
 
         # Set next time, aligned to the delay grid

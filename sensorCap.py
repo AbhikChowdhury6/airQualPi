@@ -9,7 +9,7 @@ sys.path.append(repoPath + "airQualPi/")
 
 from i2cController import I2C_BUS
 
-debug_lvl = sys.argv[1]
+debug_lvl = int(sys.argv[1])
 # TRACE
 # DEBUG
 # INFO
