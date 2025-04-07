@@ -61,6 +61,6 @@ class aBME280:
                 s,
                 'internal']
             sen = sensor(sensor_descriptors[s], retrieve_datas[s], dd, debug_lvl)
-            sensors.append(sen)
+            self.sensors.append(sen)
 
         
