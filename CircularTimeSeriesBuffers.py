@@ -25,7 +25,7 @@ class CircularTimeSeriesBuffers:
         self.data_buffers = torch.zeros((numBuffs, hz, length), dtype=DTYPE).share_memory_()
         self.time_buffers = torch.zeros((numBuffs, self.size[0]), dtype=torch.int64).share_memory_()
         #print("initialized")
-        sys.stdout.flush()
+        #sys.stdout.flush()
 
     def bufferNum(self, timestamp):
         return timestamp.second % numBuffs

@@ -2,6 +2,7 @@ import torch.multiprocessing as mp
 from datetime import datetime, timedelta
 
 from bme280 import BME280
+import sys
 repoPath = "/home/pi/Documents/"
 sys.path.append(repoPath + "airQualPi/")
 from circularTimeSeriesBuffer import CircularTimeSeriesBuffers

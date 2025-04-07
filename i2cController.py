@@ -10,6 +10,7 @@ from datetime import datetime, timedelta
 
 import importlib.util
 import os
+import sys
 
 repoPath = "/home/pi/Documents/"
 sys.path.append(repoPath + "airQualPi/")
