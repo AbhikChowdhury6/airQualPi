@@ -32,7 +32,7 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
         headers = ['sampleDT!datetime64[ns]'] + colNames
         with open(day_file_name, "a", newline="") as f:
             writer = csv.writer(f)
-            if not file_exists:  # Write headers only if file is new
+            if not os.path.exists(day_file_name):  # Write headers only if file is new
                 writer.writerow(headers)
             
             for i, data in enumerate(ctsb.data_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]]):
