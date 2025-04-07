@@ -18,7 +18,7 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
         #print(f"writer: waiting {secondsToWait} till {st + timedelta(seconds=secondsToWait)}")
         time.sleep(secondsToWait)
 
-        lastBuffNum = ((ctsb.bn[0] + (ctsb.numBuffs[0]-1)) % ctsb.numBuffs[0]).copy()
+        lastBuffNum = ((ctsb.bn[0] + (ctsb.numBuffs[0]-1)) % ctsb.numBuffs[0]).clone()
 
         if ctsb.lengths[lastBuffNum][0] == 0:
                 continue

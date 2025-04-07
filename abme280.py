@@ -38,6 +38,8 @@ class sensor:
         now = datetime.now().astimezone()
         if now >= self.retrive_after:
             self.retrive_after = now + self.delay
+            print(now)
+            sys.stdout.flush()
             self.buffer.append(now, self.retrieve_data())
         
 
