@@ -1,6 +1,9 @@
 import torch
 from datetime import datetime, timedelta, timezone
-
+import sys
+repoPath = "/home/pi/Documents/"
+sys.path.append(repoPath + "airQualPi/")
+from circularTimeSeriesBuffer import CircularTimeSeriesBuffers
 
 def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
                    debug_lvl, exitSignal):
