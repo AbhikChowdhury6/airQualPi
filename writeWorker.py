@@ -1,6 +1,5 @@
 import torch
 from datetime import datetime, timedelta, timezone
-import msgpack
 
 
 def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
