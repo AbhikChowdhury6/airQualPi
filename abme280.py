@@ -1,6 +1,6 @@
 import torch.multiprocessing as mp
 from datetime import datetime, timedelta
-
+import torch
 from bme280 import BME280
 import sys
 repoPath = "/home/pi/Documents/"
