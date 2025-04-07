@@ -1,6 +1,7 @@
 import torch.multiprocessing as mp
 from datetime import datetime, timedelta, timezone
 import torch
+from zoneinfo import ZoneInfo
 from bme280 import BME280
 import sys
 repoPath = "/home/pi/Documents/"
@@ -35,12 +36,15 @@ class sensor:
     
     def read_data(self):
         #check if it's the right time
-        now = datetime.now().astimezone()
+        now = datetime.now().astimezone(ZoneInfo("UTC"))
         if now >= self.retrive_after:
             self.retrive_after = now + self.delay
             print(now)
             sys.stdout.flush()
-            self.buffer.append(now, self.retrieve_data())
+            new_data = self.retrieve_data()
+            print(new_data)
+            sys.stdout.flush()
+            self.buffer.append(new_data, now)
         
 
 
