@@ -29,6 +29,7 @@ def load_class_and_instantiate(filepath, class_name, *args, **kwargs):
 
 # this is a process to be spawned
 def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
+    print('in i2c!')
 
     # init a bus using smbus2
     I2C_BUS = SMBus(1)

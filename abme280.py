@@ -12,6 +12,7 @@ from writeWorker import write_worker
 
 class sensor:
     def __init__(self, config, retrieve_data, dd, debug_lvl):
+        print('starting sensor!')
         self.dd = dd
         self.retrieve_data = retrieve_data
         self.hz = config['hz']
@@ -40,6 +41,7 @@ class sensor:
 
 class aBME280:
     def __init__(self, bus, descriptor, debug_lvl):
+        print('starting a bme!')
         self.bme280 = BME280(i2c_dev=bus)
         retrieve_datas = {'temp-c': self.bme280.get_temperature,
                             'relativeHumidity': self.bme280.get_humidity,

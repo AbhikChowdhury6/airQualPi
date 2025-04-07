@@ -46,6 +46,7 @@ i2c_sensor_descriptor = {
 exit_signal = torch.zeros(1, dtype=torch.int32).share_memory_()
 
 i2c_process = mp.Process(target=I2C_BUS, args=(i2c_sensor_descriptor, debug_lvl, exit_signal))
+i2c_process.start()
 
 processes = {}
 processes['i2c_process'] = i2c_process
