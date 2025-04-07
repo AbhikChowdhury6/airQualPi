@@ -27,7 +27,7 @@ def load_class_and_instantiate(filepath, class_name, *args, **kwargs):
 
 
 # this is a process to be spawned
-def I2C_BUS(bus_descriptor, debug_lvl, heart_beat, exitSignal):
+def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
 
     # init a bus using smbus2
     I2C_BUS = SMBus(1)
@@ -56,9 +56,15 @@ def I2C_BUS(bus_descriptor, debug_lvl, heart_beat, exitSignal):
 
     # Start loop
     next_time = datetime.now()
-    while not exitSignal.value:
+    while True:
         for sensor in sensors:
             sensor.read_data()
+        
+        if exitSignal[0]:
+            print('sending write exit signals to i2c sensors')
+            for sensor in sensors:
+                sensor.write_exit_signal = 1
+            break
 
         # Set next time, aligned to the delay grid
         next_time += min_delay
@@ -71,4 +77,10 @@ def I2C_BUS(bus_descriptor, debug_lvl, heart_beat, exitSignal):
             if debug_lvl > 0:
                 print(f"[WARNING] Loop overran by {-sleep_duration:.3f} seconds")
             next_time = datetime.now()  # Reset so drift doesn't accumulate
+        
+print('i2c waiting 3 seconds for writers to exit')
+time.sleep(3)
+print('i2c exiting')  
+
+
 

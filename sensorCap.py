@@ -1,39 +1,70 @@
 import time
+import sys
 from datetime import datetime
+import torch.multiprocessing as mp
+repoPath = "/home/pi/Documents/"
+sys.path.append(repoPath + "airQualPi/")
+
+from i2cController import I2C_BUS
+
+debug_lvl = sys.argv[1]
+# TRACE
+# DEBUG
+# INFO
+# WARN
+# ERROR
+# FATAL
 
 
-keys = ["responsiblePartyName", "instanceName", "developingPartyName", "deviceName", "dataType", "dataSource"]
-# what are my descriptors going to look like?
-['abhik', 'testing', 'Bosch', 'BME280', 'airTemp-C', 'internal']
-['abhik', 'testing', 'Bosch', 'BME280', 'relativeHumidity', 'internal']
-['abhik', 'testing', 'Bosch', 'BME280', 'pressure-hpa', 'internal']
-
-
+i2c_sensor_descriptor = {
+    "abme280": {
+        'class_name':'aBME280',
+        'responsiblePartyName': 'abhik',
+        'instanceName': 'testing',
+        'manufacturer': 'Bosch',
+        'sensors': {
+            'temp-c': {
+                'hz': 1,
+                'col_names': ['temp-c!float32']
+            },
+            'relativeHumidity': {
+                'hz': 1,
+                'col_names': ['relativeHumidity!float32']
+            },
+            'pressure-pa': {
+                'hz': 16,
+                'col_names': ['pressure-pa!int32']
+            }
+        }
+    }
+}
 
 # this file will just
 # start up an i2cbus and pass in the sensors dict
 # later we can figure out how to do the outs.
+exit_signal = torch.zeros(1, dtype=torch.int32).share_memory_()
 
+i2c_process = mp.Process(target=I2C_BUS, args=(i2c_sensor_descriptor, debug_lvl, exit_signal))
 
+processes = {}
+processes['i2c_process'] = i2c_process
 
-# Wait until a full second starts
+# make sure my processes are alive, and if I recive q exit everything
 while True:
-    now = datetime.now()
-    if now.microsecond < 1000:
+    if any(not processes[p].is_alive() for p in processes):
+        for p in processes:
+            print(p, processes[p].is_alive())
+        exit_signal = 1
         break
-    time.sleep(0.001)
 
-# Sampling loop
-subsec_idx = 0
-while True:
-    now = datetime.now()
 
-    # Read sensors at their scheduled times
-    for sensor in sensors:
-        if sensor.should_update(subsec_idx):
-            value = sensor.get_latest_val()
-            print(f"{sensor.name}: {value}")
+    if select.select([sys.stdin], [], [], 0)[0]:
+        if sys.stdin.read(1) == 'q':
+            print("got q going to start exiting")
+            exit_signal = 1
+            break
+    time.sleep(1)
 
-    # Increment sub-second index and sleep
-    subsec_idx = (subsec_idx + 1) % max_rate
-    time.sleep(loop_delay)
+print('waiting 5 seconds for subprocesses to exit')
+time.sleep(5)
+print('exiting now')
