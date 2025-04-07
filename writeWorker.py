@@ -37,7 +37,7 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
                 writer.writerow(headers)
             
             for i, data in enumerate(ctsb.data_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]]):
-                writer.writerow([newTimestamps[i].isoformat()] + data)
+                writer.writerow([newTimestamps[i].isoformat()] + data.tolist())
         
         if exitSignal[0]:
             break
