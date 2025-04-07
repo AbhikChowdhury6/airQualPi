@@ -28,7 +28,7 @@ class CircularTimeSeriesBuffers:
         #sys.stdout.flush()
 
     def bufferNum(self, timestamp):
-        return timestamp.second % numBuffs
+        return timestamp.second % self.numBuffs
     
     def __setitem__(self, index, value):
         """Set value and timestamp at a circular index."""
