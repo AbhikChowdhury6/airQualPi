@@ -44,8 +44,8 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
             bus_descriptor[device],
             debug_lvl
         )
-        self.devices.append(newDevice)
-        self.sensors += newDevice.sensors
+        devices.append(newDevice)
+        sensors += newDevice.sensors
 
 
     min_delay = min(s.delay for s in sensors)  # timedelta object
