@@ -19,9 +19,11 @@ class sensor:
         self.hz = config['hz']
         self.delay = timedelta(seconds=(1/self.hz))
         self.config = config
-        self.dtype = config['col_names'][0].split('!')[1]
+        self.dtype = getattr(torch, config['col_names'][0].split('!')[1])
         self.debug_lvl = debug_lvl
 
+        #print(self.hz, self.dtype)
+        #sys.stdout.flush()
         self.buffer = CircularTimeSeriesBuffers(self.hz, self.dtype)
 
         self.write_exit_signal = torch.zeros(1, dtype=torch.int32).share_memory_()
