@@ -13,6 +13,7 @@ from writeWorker import write_worker
 class sensor:
     def __init__(self, config, retrieve_data, dd, debug_lvl):
         print('starting sensor!')
+        sys.stdout.flush()
         self.dd = dd
         self.retrieve_data = retrieve_data
         self.hz = config['hz']
@@ -57,7 +58,7 @@ class aBME280:
                 'bme280',
                 s,
                 'internal']
-            sensor = sensor(sensor_descriptors[s], retrieve_datas[s], dd, debug_lvl)
-            sensors.append(sensor)
+            sen = sensor(sensor_descriptors[s], retrieve_datas[s], dd, debug_lvl)
+            sensors.append(sen)
 
         
