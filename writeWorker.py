@@ -5,7 +5,7 @@ repoPath = "/home/pi/Documents/"
 sys.path.append(repoPath + "airQualPi/")
 from circularTimeSeriesBuffer import CircularTimeSeriesBuffers
 
-def writer_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
+def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
                    debug_lvl, exitSignal):
     # all this should do is save the last second
     def intTensorToDtList(tensor):
