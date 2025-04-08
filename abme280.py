@@ -20,7 +20,7 @@ class sensor:
         self.hz = config['hz']
         self.delay_micros = 1_000_000/self.hz
         self.config = config
-        self.dtype = getattr(torch, config['col_names'][0].split('!')[1])
+        self.dtype = getattr(torch, config['col_names'][1].split('!')[1])
         self.debug_lvl = debug_lvl
 
         #print(self.hz, self.dtype)
