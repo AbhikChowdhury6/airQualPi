@@ -8,7 +8,7 @@ repoPath = "/home/pi/Documents/"
 sys.path.append(repoPath + "airQualPi/")
 from circularTimeSeriesBuffer import CircularTimeSeriesBuffers
 from writeWorker import write_worker
-
+import re
 
 
 class sensor:
@@ -21,7 +21,12 @@ class sensor:
         self.hz = config['hz']
         self.delay_micros = 1_000_000/self.hz
         self.config = config
-        self.dtype = getattr(torch, config['col_names'][1].split('!')[1])
+        self.torch_dtype = getattr(torch, config['col_names'][1].split('!')[1])
+        self.pandas_dtype = config['col_names'][1].split('!')[2]
+        self.abc1_dtype = config['col_names'][1].split('!')[3]
+        matches = re.findall(r'-?\d+', abc1_dtype)[-1]
+        self.rounding_bits = int(matches[-1]) if matches else 0
+        self.billionths = 1_000_000_000/(2**self.rounding_bits)
         self.debug_lvl = debug_lvl
 
         #print(self.hz, self.dtype)
@@ -46,7 +51,23 @@ class sensor:
             new_data = self.retrieve_data()
             #print(new_data)
             #sys.stdout.flush()
-            self.buffer.append(new_data, now)
+            
+            if self.rounding_bits == 0:
+                self.buffer.append(new_data, now)
+                return 
+
+            #we need 5 didgits to prefecly define afloat 5 and same for 6 and 7 and 8
+            # honestly let's just handle up to 9 bits of rounding for now and that should even cover our quats ok
+            
+            rounded_data = int(new_data)
+            error = int((new_data%1) * 1_000_000_000) % self.billionths
+            
+            if error >= self.billionths/2:
+                rounded_data += (self.billionths - error)/1_000_000_000
+            else :
+                rounded_data -= error/1_000_000_000
+            
+            self.buffer.append(rounded_data, now)
         
 
 

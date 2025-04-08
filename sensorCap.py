@@ -27,15 +27,15 @@ i2c_sensor_descriptor = {
         'sensors': {
             'temp-c': {
                 'hz': 1,
-                'col_names': ['sampleDT!datetime64[ns]!audelayhz1', 'temp-c!float32!afloat']
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'temp-c!float32!float32!afloat8']
             },
             'relativeHumidity': {
                 'hz': 1,
-                'col_names': ['sampleDT!datetime64[ns]!audelayhz1', 'relativeHumidity!float32!afloat']
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'relativeHumidity!float32!float32!afloat5']
             },
             'pressure-pa': {
                 'hz': 16,
-                'col_names': ['sampleDT!datetime64[ns]!audelayhz16', 'pressure-pa!int32!aint']
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz16', 'pressure-pa!int32!int32!aint']
             }
         }
     }
