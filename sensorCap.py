@@ -34,7 +34,7 @@ i2c_sensor_descriptor = {
                 'col_names': ['relativeHumidity!float32']
             },
             'pressure-pa': {
-                'hz': 16,
+                'hz': 8,
                 'col_names': ['pressure-pa!int32']
             }
         }
