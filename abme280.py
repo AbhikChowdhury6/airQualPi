@@ -24,7 +24,7 @@ class sensor:
         self.torch_dtype = getattr(torch, config['col_names'][1].split('!')[1])
         self.pandas_dtype = config['col_names'][1].split('!')[2]
         self.abc1_dtype = config['col_names'][1].split('!')[3]
-        matches = re.findall(r'-?\d+', abc1_dtype)[-1]
+        matches = re.findall(r'-?\d+', self.abc1_dtype)[-1]
         self.rounding_bits = int(matches[-1]) if matches else 0
         self.billionths = 1_000_000_000/(2**self.rounding_bits)
         self.debug_lvl = debug_lvl
