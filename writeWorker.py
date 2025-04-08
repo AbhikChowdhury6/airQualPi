@@ -26,7 +26,12 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
                 continue
         
         newTimestamps = intTensorToDtList(ctsb.time_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]])
-        day_file_name = '/home/pi/Documents/dayData/' + "_".join(deviceDescriptor) + "_" +\
+
+        day_folder = repoPath + 'dayData/'
+        if not os.path.exists(day_folder):
+            os.mkdir(day_folder)
+
+        day_file_name = day_folder + "_".join(deviceDescriptor) + "_" +\
                         newTimestamps[0].strftime('%Y-%m-%d%z') + '.csv'
         
         # other popular types float64, int64, float32, int32
