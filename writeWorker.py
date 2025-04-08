@@ -31,15 +31,18 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
         if not os.path.exists(day_folder):
             os.mkdir(day_folder)
 
-        day_file_name = day_folder + "_".join(deviceDescriptor) + "_" +\
-                        newTimestamps[0].strftime('%Y-%m-%d%z') + '.csv'
+        hour_file_name = day_folder + "_".join(deviceDescriptor) + "_" +\
+                        newTimestamps[0].strftime('%Y-%m-%dT%H%z') + '.csv'
+
+        is_new_file = not os.path.exists(hour_file_name)
         
         # other popular types float64, int64, float32, int32
-        headers = ['sampleDT!datetime64[ns]'] + colNames
-        with open(day_file_name, "a", newline="") as f:
+        with open(hour_file_name, "a", newline="") as f:
             writer = csv.writer(f)
-            if not os.path.exists(day_file_name):  # Write headers only if file is new
-                writer.writerow(headers)
+            if is_new_file:  # Write headers only if file is new
+                print('writing cols!')
+                sys.stdout.flush()
+                writer.writerow(colNames)
             
             for i, data in enumerate(ctsb.data_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]]):
                 writer.writerow([newTimestamps[i].isoformat()] + data.tolist())
