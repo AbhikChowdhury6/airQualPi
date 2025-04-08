@@ -18,7 +18,7 @@ class sensor:
         self.dd = dd
         self.retrieve_data = retrieve_data
         self.hz = config['hz']
-        self.delay = timedelta(seconds=(1/self.hz))
+        self.delay_micros = 1_000_000/self.hz
         self.config = config
         self.dtype = getattr(torch, config['col_names'][0].split('!')[1])
         self.debug_lvl = debug_lvl
@@ -38,7 +38,8 @@ class sensor:
         #check if it's the right time
         now = datetime.now().astimezone(ZoneInfo("UTC"))
         if now >= self.retrive_after:
-            self.retrive_after = now + self.delay
+            dm = delay_micros - (now.microsecond % delay_micros)
+            self.retrive_after = now + timedelta(microseconds=dm)
             #print(now)
             #sys.stdout.flush()
             new_data = self.retrieve_data()

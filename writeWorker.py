@@ -44,7 +44,7 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
             for i, data in enumerate(ctsb.data_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]]):
                 writer.writerow([newTimestamps[i].isoformat()] + data.tolist())
         
-        if exitSignal[0]:
+        if exitSignal[0] == 1:
             break
             
         #honestly we could just have a cron job clean up and do the pandas conversions
