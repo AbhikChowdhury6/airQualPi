@@ -34,7 +34,7 @@ i2c_sensor_descriptor = {
                 'col_names': ['relativeHumidity!float32']
             },
             'pressure-pa': {
-                'hz': 8,
+                'hz': 16,
                 'col_names': ['pressure-pa!int32']
             }
         }
@@ -57,14 +57,14 @@ while True:
     if any(not processes[p].is_alive() for p in processes):
         for p in processes:
             print(p, processes[p].is_alive())
-        exit_signal = 1
+        exit_signal[0] = 1
         break
 
 
     if select.select([sys.stdin], [], [], 0)[0]:
         if sys.stdin.read(1) == 'q':
             print("got q going to start exiting")
-            exit_signal = 1
+            exit_signal[0] = 1
             break
     time.sleep(1)
 
