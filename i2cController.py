@@ -58,13 +58,11 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
         for sensor in sensors:
             sensor.read_data()
 
-        print(exitSignal[0])
-        print(exitSignal[0] == 1)
         if any(not s.write_process.is_alive() for s in sensors) or exitSignal[0] == 1:
             print('sending write exit signals to i2c sensors')
             for s in sensors:
                 print("_".join(s.dd), s.write_process.is_alive())
-                s.write_exit_signal = 1
+                s.write_exit_signal[0] = 1
             break
         
         micros_to_delay = delay_micros - (datetime.now().microsecond % delay_micros)
