@@ -39,11 +39,11 @@ class sensor:
         now = datetime.now().astimezone(ZoneInfo("UTC"))
         if now >= self.retrive_after:
             self.retrive_after = now + self.delay
-            print(now)
-            sys.stdout.flush()
+            #print(now)
+            #sys.stdout.flush()
             new_data = self.retrieve_data()
-            print(new_data)
-            sys.stdout.flush()
+            #print(new_data)
+            #sys.stdout.flush()
             self.buffer.append(new_data, now)
         
 
@@ -52,9 +52,12 @@ class aBME280:
     def __init__(self, bus, descriptor, debug_lvl):
         print('starting a bme!')
         self.bme280 = BME280(i2c_dev=bus)
+        def get_pressure_pa():
+            return self.bme280.get_pressure() * 100
+        
         retrieve_datas = {'temp-c': self.bme280.get_temperature,
                             'relativeHumidity': self.bme280.get_humidity,
-                            'pressure-pa': self.bme280.get_pressure}
+                            'pressure-pa': get_pressure_pa}
 
 
         sensor_descriptors = descriptor['sensors']

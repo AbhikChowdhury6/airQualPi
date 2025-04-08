@@ -48,17 +48,12 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
         sensors += newDevice.sensors
 
 
-    min_delay = min(s.delay for s in sensors)  # timedelta object
-    delay_secs = min_delay.total_seconds()
-
-    # Align to the next full second
-    now = datetime.now()
-    aligned_start = now.replace(microsecond=0) + timedelta(seconds=1)
-    time_to_sleep = (aligned_start - now).total_seconds()
-    time.sleep(time_to_sleep)
+    max_hz = max(s.hz for s in sensors)
+    # works perfectly up to 64 hz
+    delay_micros = 1_000_000/max_hz
 
     # Start loop
-    next_time = datetime.now()
+    time.sleep(1 - datetime.now().microsecond/1_000_000)
     while True:
         for sensor in sensors:
             sensor.read_data()
@@ -69,18 +64,9 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
                 print("_".join(s.dd), s.write_process.is_alive())
                 s.write_exit_signal = 1
             break
-
-        # Set next time, aligned to the delay grid
-        next_time += min_delay
-        now = datetime.now()
-        sleep_duration = (next_time - now).total_seconds()
-
-        if sleep_duration > 0:
-            time.sleep(sleep_duration)
-        else:
-            if debug_lvl > 0:
-                print(f"[WARNING] Loop overran by {-sleep_duration:.3f} seconds")
-            next_time = datetime.now()  # Reset so drift doesn't accumulate
+        
+        micros_to_delay = delay_micros - (datetime.now().microsecond % delay_micros)
+        time.sleep(micros_to_delay/1_000_000)
         
     print('i2c waiting 3 seconds for writers to exit')
     time.sleep(3)
