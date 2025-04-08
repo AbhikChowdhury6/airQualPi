@@ -38,7 +38,7 @@ class sensor:
         #check if it's the right time
         now = datetime.now().astimezone(ZoneInfo("UTC"))
         if now >= self.retrive_after:
-            dm = delay_micros - (now.microsecond % delay_micros)
+            dm = self.delay_micros - (now.microsecond % self.delay_micros)
             self.retrive_after = now + timedelta(microseconds=dm)
             #print(now)
             #sys.stdout.flush()
