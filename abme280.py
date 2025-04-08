@@ -9,7 +9,7 @@ sys.path.append(repoPath + "airQualPi/")
 from circularTimeSeriesBuffer import CircularTimeSeriesBuffers
 from writeWorker import write_worker
 import re
-
+from icecream import ic
 
 class sensor:
     def __init__(self, config, retrieve_data, dd, debug_lvl):
@@ -49,8 +49,8 @@ class sensor:
             #print(now)
             #sys.stdout.flush()
             new_data = self.retrieve_data()
-            #print(new_data)
-            #sys.stdout.flush()
+            ic(new_data)
+            sys.stdout.flush()
             
             if self.rounding_bits == 0:
                 self.buffer.append(new_data, now)
@@ -61,11 +61,13 @@ class sensor:
             
             rounded_data = int(new_data)
             error = int((new_data%1) * 1_000_000_000) % self.billionths
+            ic(rounded_data, error)
             
             if error >= self.billionths/2:
                 rounded_data += (self.billionths - error)/1_000_000_000
             else :
                 rounded_data -= error/1_000_000_000
+            ic(rounded_data)
             
             self.buffer.append(rounded_data, now)
         
