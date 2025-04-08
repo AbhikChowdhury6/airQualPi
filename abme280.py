@@ -49,24 +49,27 @@ class sensor:
             #print(now)
             #sys.stdout.flush()
             new_data = self.retrieve_data()
-            ic(new_data)
-            sys.stdout.flush()
             
             if self.rounding_bits == 0:
-                self.buffer.append(new_data, now)
+                self.buffer.append(int(new_data), now)
                 return 
 
+            ic(new_data)
+            sys.stdout.flush()
             #we need 5 didgits to prefecly define afloat 5 and same for 6 and 7 and 8
             # honestly let's just handle up to 9 bits of rounding for now and that should even cover our quats ok
             
             rounded_data = int(new_data)
-            error = int((new_data%1) * 1_000_000_000) % self.billionths
-            ic(rounded_data, error)
+            this_billionths = int((new_data%1) * 1_000_000_000)
+            floord =  (this_billionths // self.billionths)  *  self.billionths
+            error =  this_billionths - floord
             
             if error >= self.billionths/2:
-                rounded_data += (self.billionths - error)/1_000_000_000
-            else :
-                rounded_data -= error/1_000_000_000
+                rounded_data += (floord + self.billionths)/1_000_000_000
+            else:
+                rounded_data += floord/1_000_000_000
+            
+            ic(this_billionths, floord, error)
             ic(rounded_data)
             
             self.buffer.append(rounded_data, now)
