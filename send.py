@@ -5,16 +5,23 @@
 # useradd -m uploadingGuest
 # passwd <strong password here>
 # as uploadingGuest
-# mkdir recentCaptures
-# chmod 777 recentCaptures
+# mkdir recentSensorCap
+# chmod 777 recentSensorCap
 
 #process for setting up local
 # ssh-keygen -t rsa
-# ssh-copy-id uploadingGuest@<remote ip>
+# ssh-copy-id uploadingGuest@192.168.1.113
 # chrontab -e 
 # add the line 0 3 * * * /home/$USER/Documents/videoProcessing/send.sh
 # for logs check /var/log/syslog or /var/log/cron
 
+#on pi
+#2 17 * * * /home/pi/miniforge3/envs/vision/bin/python3.12 /home/pi/Documents/airQualPi/send.py
+#1 * * * * /home/pi/miniforge3/envs/vision/bin/python3.12 /home/pi/Documents/airQualPi/toDataFrames.py
+
+
+#on server
+#8 17 * * * /usr/bin/mv /home/uploadingGuest/recentSensorCap/* /home/chowder/Documents/recentSensorCap/
 
 import os
 import subprocess
@@ -38,7 +45,7 @@ serverip = "192.168.1.113"
 
 pathToCollectedData = "/home/" + os.getlogin() + "/Documents/sensorData/"
 
-foldersInCollectedData = os.listdir(pathToCollectedData)
+foldersInCollectedData = sorted(os.listdir(pathToCollectedData))
 if len(foldersInCollectedData) == 0:
     print("no files found, exiting")
     logger.info("no files found, exiting")

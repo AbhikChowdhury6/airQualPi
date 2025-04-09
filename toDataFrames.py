@@ -19,7 +19,7 @@ def dt_to_fnString(dt):
 
 curr_ext = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H%z') + ".csv"
 # for every csv
-csvs = os.listdir(source)
+csvs = sorted(os.listdir(source))
 for file in csvs:
     if file.split('_')[-1] == curr_ext:
         continue
@@ -57,6 +57,7 @@ for file in csvs:
     
     df.to_parquet(destination + target_folder_name + target_file_name, compression='gzip')
     print(f"wrote: {target_folder_name + target_file_name}")
+    os.remove(source + file)
 
     
 

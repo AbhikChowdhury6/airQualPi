@@ -9,7 +9,8 @@ in it files like dd_dayDesctiptor
 
 the send works just like the other one
 
-
+lets test send
+alright so the only thongs left to do are the hourly and 
 
 
 
