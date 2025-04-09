@@ -30,6 +30,7 @@ for file in csvs:
     # read it in as a dataframe with the types
     df = pd.read_csv(
         source + file,
+        skiprows=1,               # Skip the original header
         names=headers,
         dtype=dtype_map,
         parse_dates=datetime_cols
