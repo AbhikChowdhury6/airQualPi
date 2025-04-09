@@ -1,3 +1,18 @@
+so now the bme 280 capture is working!
+
+lets make the 2 cron jobs
+
+let's make a new flow to keep it separate from the video processing
+on the pi
+a folder called sensorData
+in it files like dd_dayDesctiptor
+
+the send works just like the other one
+
+
+
+
+
 so some notes on main
 - let's do a thing where we start with two sets of classes, actually 3 with the presence model
 

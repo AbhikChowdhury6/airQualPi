@@ -54,8 +54,8 @@ class sensor:
                 self.buffer.append(int(new_data), now)
                 return 
 
-            ic(new_data)
-            sys.stdout.flush()
+            #ic(new_data)
+            #sys.stdout.flush()
             #we need 5 didgits to prefecly define afloat 5 and same for 6 and 7 and 8
             # honestly let's just handle up to 9 bits of rounding for now and that should even cover our quats ok
             
@@ -69,8 +69,8 @@ class sensor:
             else:
                 rounded_data += floord/1_000_000_000
             
-            ic(this_billionths, floord, error)
-            ic(rounded_data)
+            #ic(this_billionths, floord, error)
+            #ic(rounded_data)
             
             self.buffer.append(rounded_data, now)
         
