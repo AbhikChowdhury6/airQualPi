@@ -18,9 +18,12 @@ def dt_to_fnString(dt):
 
 
 curr_ext = datetime.now().strftime('%Y-%m-%dT%H%z') + ".csv"
+print(curr_ext)
 # for every csv
 csvs = os.listdir(source)
 for file in csvs:
+    print(file.split('_')[-1])
+    print(file.split('_')[-1] == curr_ext)
     if file.split('_')[-1] == curr_ext:
         continue
     # getting the first row of the csv that contains the header
