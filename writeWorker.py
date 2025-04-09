@@ -40,7 +40,8 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
         with open(hour_file_name, "a", newline="") as f:
             writer = csv.writer(f)
             if is_new_file:  # Write headers only if file is new
-                print('writing cols!')
+                # print('writing cols!')
+                print('new file! ' + hour_file_name)
                 sys.stdout.flush()
                 writer.writerow(colNames)
             

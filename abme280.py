@@ -46,6 +46,9 @@ class sensor:
         if now >= self.retrive_after:
             dm = self.delay_micros - (now.microsecond % self.delay_micros)
             self.retrive_after = now + timedelta(microseconds=dm)
+            
+            rounded_down_micros = (now.microsecond//self.delay_micros) * self.delay_micros
+            now = now.replace(microsecond=rounded_down_micros)
             #print(now)
             #sys.stdout.flush()
             new_data = self.retrieve_data()
