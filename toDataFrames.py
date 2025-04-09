@@ -1,11 +1,51 @@
 #for every csv, trun it into a dataframe of the correct type
 #add an hour field if needed
 import os
-
+import csv
+import pandas as pd
 source = "/home/" + os.getlogin() + "/Documents/daysData/"
 
 destination = "/home/" + os.getlogin() + "/Documents/sensorData/"
 
+#to to fnstring
+def dt_to_fnString(dt):
+    return dt.astimezone(ZoneInfo("UTC")).strftime('%Y-%m-%dT%H%M%S,%f%z')
 
 
+# for every csv
+csvs = os.listdir(source)
+for file in csvs:
+    # getting the first row of the csv that contains the header
+    with open(source + file, newline="") as f:
+        reader = csv.reader(f)
+        headers = next(reader)
+
+    # we're going to parse out the pandas data types
+    pandas_dtypes = [s.split('!')[2] for s in headers]
+    datetime_cols = [col for col, dtype in zip(headers, pandas_dtypes) if dtype == "datetime64[ns]"]
+    dtype_map = {col: dtype for col, dtype in zip(headers, pandas_dtypes) if dtype != "datetime64[ns]"}
+
+    # read it in as a dataframe with the types
+    df = pd.read_csv(
+        source + file,
+        names=headers,
+        dtype=dtype_map,
+        parse_dates=datetime_cols
+    )
+
+    #set the index as sampleDT
+    df = df.set_index(headers[0])
+
+    # each file is named with the first and last datetime
+    firstTs = df.iloc[0].name
+    lastTs = df.iloc[-1].name
+    target_file_name = dt_to_fnString(firstTs) + '_' + dt_to_fnString(lastTs) + '.parquet.gzip'
+
+    # save it to a folder with the name of the dd and date
+    device_descriptor = file.split('_')[:-1]
+    target_folder_name = "_".join(device_descriptor) + firstTs.strftime('%Y-%m-%d%z') +'/'
+    
+    df.to_parquet(destination + target_folder_name + target_file_name, compression='gzip')
+
+    
 
