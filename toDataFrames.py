@@ -4,6 +4,7 @@ import os
 import csv
 import pandas as pd
 from zoneinfo import ZoneInfo
+from datetime import datetime
 
 source = "/home/" + os.getlogin() + "/Documents/dayData/"
 
@@ -16,9 +17,12 @@ def dt_to_fnString(dt):
     return dt.astimezone(ZoneInfo("UTC")).strftime('%Y-%m-%dT%H%M%S,%f%z')
 
 
+curr_ext = datetime.now().strftime('%Y-%m-%dT%H%z') + ".csv"
 # for every csv
 csvs = os.listdir(source)
 for file in csvs:
+    if file.split('_')[-1] == curr_ext:
+        continue
     # getting the first row of the csv that contains the header
     with open(source + file, newline="") as f:
         reader = csv.reader(f)
@@ -48,7 +52,7 @@ for file in csvs:
 
     # save it to a folder with the name of the dd and date
     device_descriptor = file.split('_')[:-1]
-    target_folder_name = "_".join(device_descriptor) + firstTs.strftime('%Y-%m-%d%z') +'/'
+    target_folder_name = "_".join(device_descriptor) + '_' + firstTs.strftime('%Y-%m-%d%z') +'/'
     os.makedirs(destination + target_folder_name, exist_ok=True)
     
     df.to_parquet(destination + target_folder_name + target_file_name, compression='gzip')
