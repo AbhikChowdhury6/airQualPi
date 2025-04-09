@@ -3,7 +3,7 @@
 import os
 import csv
 import pandas as pd
-source = "/home/" + os.getlogin() + "/Documents/daysData/"
+source = "/home/" + os.getlogin() + "/Documents/dayData/"
 
 destination = "/home/" + os.getlogin() + "/Documents/sensorData/"
 
