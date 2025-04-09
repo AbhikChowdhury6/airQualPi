@@ -6,6 +6,8 @@ import pandas as pd
 source = "/home/" + os.getlogin() + "/Documents/dayData/"
 
 destination = "/home/" + os.getlogin() + "/Documents/sensorData/"
+os.makedirs(destination, exist_ok=True)
+
 
 #to to fnstring
 def dt_to_fnString(dt):
@@ -44,6 +46,7 @@ for file in csvs:
     # save it to a folder with the name of the dd and date
     device_descriptor = file.split('_')[:-1]
     target_folder_name = "_".join(device_descriptor) + firstTs.strftime('%Y-%m-%d%z') +'/'
+    os.makedirs(target_folder_name, exist_ok=True)
     
     df.to_parquet(destination + target_folder_name + target_file_name, compression='gzip')
 
