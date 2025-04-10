@@ -33,6 +33,7 @@ for file in csvs:
     pandas_dtypes = [s.split('!')[2] for s in headers]
     datetime_cols = [col for col, dtype in zip(headers, pandas_dtypes) if dtype == "datetime64[ns]"]
     dtype_map = {col: dtype for col, dtype in zip(headers, pandas_dtypes) if dtype != "datetime64[ns]"}
+    ic(datetime_cols, datetime_cols, pandas_dtypes)
 
     # read it in as a dataframe with the types
     df = pd.read_csv(
@@ -45,6 +46,7 @@ for file in csvs:
 
     #set the index as sampleDT
     df = df.set_index(headers[0])
+    ic(df.dtypes)
     ic(df.head())
     # each file is named with the first and last datetime
     firstTs = df.iloc[0].name
