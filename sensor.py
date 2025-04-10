@@ -18,7 +18,7 @@ class Sensor:
         sys.stdout.flush()
         self.dd = dd
         self.retrieve_data = retrieve_data
-        _ = retrieve_data() # a warmup reading
+        _ = retrieve_data # a warmup reading
         self.hz = config['hz']
         self.delay_micros = 1_000_000/self.hz
         self.config = config
@@ -52,7 +52,7 @@ class Sensor:
             now = now.replace(microsecond=int(rounded_down_micros))
             #print(now)
             #sys.stdout.flush()
-            new_data = self.retrieve_data()
+            new_data = self.retrieve_data
             
             if self.rounding_bits == 0:
                 self.buffer.append(int(new_data), now)

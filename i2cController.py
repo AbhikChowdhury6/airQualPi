@@ -1,4 +1,4 @@
-from smbus2 import SMBus
+import board
 import time
 from datetime import datetime, timedelta
 
@@ -14,7 +14,7 @@ import sys
 
 repoPath = "/home/pi/Documents/"
 sys.path.append(repoPath + "airQualPi/")
-classe_loc = repoPath + "airQualPi/"
+class_loc = repoPath + "airQualPi/"
 
 def load_class_and_instantiate(filepath, class_name, *args, **kwargs):
     module_name = os.path.splitext(os.path.basename(filepath))[0]
@@ -33,12 +33,12 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
     sys.stdout.flush()
 
     # init a bus using smbus2
-    I2C_BUS = SMBus(1)
+    I2C_BUS = board.I2C() 
     sensors = []
     devices = []
     for device in bus_descriptor:
         newDevice = load_class_and_instantiate(
-            classe_loc + device + '.py',
+            class_loc + device + '.py',
             bus_descriptor[device]['class_name'],
             I2C_BUS,
             bus_descriptor[device],

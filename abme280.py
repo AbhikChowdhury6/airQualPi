@@ -1,4 +1,4 @@
-from bme280 import BME280
+from adafruit_bme280 import basic as adafruit_bme280
 import sys
 repoPath = "/home/pi/Documents/"
 sys.path.append(repoPath + "airQualPi/")
@@ -8,12 +8,12 @@ from sensor import Sensor
 class aBME280:
     def __init__(self, bus, descriptor, debug_lvl):
         print('starting a bme!')
-        self.bme280 = BME280(i2c_dev=bus)
+        self.bme280 = adafruit_bme280.Adafruit_BME280_I2C(bus)
         def get_pressure_pa():
-            return self.bme280.get_pressure() * 100
+            return self.bme280.pressure * 100
         
-        retrieve_datas = {'temp-c': self.bme280.get_temperature,
-                            'relativeHumidity': self.bme280.get_humidity,
+        retrieve_datas = {'temp-c': self.bme280.temperature,
+                            'relativeHumidity': self.bme280.relative_humidity,
                             'pressure-pa': get_pressure_pa}
 
 

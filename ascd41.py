@@ -1,4 +1,4 @@
-from sensirion_i2c_scd import Scd4xI2cDevice
+import adafruit_scd4x
 import sys
 repoPath = "/home/pi/Documents/"
 sys.path.append(repoPath + "airQualPi/")
@@ -8,7 +8,7 @@ from sensor import Sensor
 class aSCD41:
     def __init__(self, bus, descriptor, debug_lvl):
         print('starting a SCD41!')
-        self.scd4x = Scd4xI2cDevice(bus)
+        self.scd4x = adafruit_scd4x.SCD4X(i2c)
         self.scd4x.start_periodic_measurement()
         
         self.get_co2 = lambda: self.scd4x.read_measurement()[0]
