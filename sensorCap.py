@@ -34,11 +34,51 @@ i2c_sensor_descriptor = {
                 'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'relativeHumidity!float32!float32!afloat5']
             },
             'pressure-pa': {
-                'hz': 16,
+                'hz': 2**4,
                 'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz16', 'pressure-pa!int32!int32!aint']
             }
         }
-    }
+    }, 
+    "ascd41": {
+        'class_name':'aSCD41',
+        'responsiblePartyName': 'abhik',
+        'instanceName': 'testing',
+        'manufacturer': 'Sensirion',
+        'sensors': {
+            'temp-c': {
+                'hz': 1,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'temp-c!float32!float32!afloat8']
+            },
+            'relativeHumidity': {
+                'hz': 1,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'relativeHumidity!float32!float32!afloat5']
+            },
+            'co2-ppm': {
+                'hz': 1,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz16', 'co2-ppm!int32!int32!aint']
+            }
+        }
+    }#, 
+    #     "apmsa003i": {
+    #     'class_name':'aPMSA003I',
+    #     'responsiblePartyName': 'abhik',
+    #     'instanceName': 'testing',
+    #     'manufacturer': 'Plantower',
+    #     'sensors': {
+    #         'temp-c': {
+    #             'hz': 1,
+    #             'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'temp-c!float32!float32!afloat8']
+    #         },
+    #         'relativeHumidity': {
+    #             'hz': 1,
+    #             'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'relativeHumidity!float32!float32!afloat5']
+    #         },
+    #         'co2': {
+    #             'hz': 1,
+    #             'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz16', 'co2-ppm!int32!int32!aint']
+    #         }
+    #     }
+    # }
 }
 
 # this file will just

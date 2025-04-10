@@ -33,7 +33,7 @@ for file in csvs:
     pandas_dtypes = [s.split('!')[2] for s in headers]
     datetime_cols = [col for col, dtype in zip(headers, pandas_dtypes) if dtype == "datetime64[ns]"]
     dtype_map = {col: dtype for col, dtype in zip(headers, pandas_dtypes) if dtype != "datetime64[ns]"}
-    ic(datetime_cols, dtype_map, pandas_dtypes)
+    #ic(datetime_cols, dtype_map, pandas_dtypes)
 
     # read it in as a dataframe with the types
     df = pd.read_csv(
@@ -47,14 +47,14 @@ for file in csvs:
     #set the index as sampleDT
     df = df.set_index(headers[0])
     df.index = pd.to_datetime(df.index, utc=True, format='ISO8601')
-    ic(df.dtypes)
-    ic(df.head())
+    #ic(df.dtypes)
+    #ic(df.head())
     # each file is named with the first and last datetime
     firstTs = df.index[0]
     lastTs = df.index[-1]
-    ic(firstTs)
-    ic(type(firstTs))
-    ic(lastTs)
+    #ic(firstTs)
+    #ic(type(firstTs))
+    #ic(lastTs)
     target_file_name = dt_to_fnString(firstTs) + '_' + dt_to_fnString(lastTs) + '.parquet.gzip'
 
     # save it to a folder with the name of the dd and date

@@ -1,3 +1,11 @@
+Alright some new notes about the process of adding another sensor type
+TODO
+- make a new file (ascd41.py) and class (aSCD41) for the new sensor 
+- figure out how to get the write code to work with the SMBUS i2c bus
+- repeat the sensor and read data functions, but moudularize it more
+
+
+
 so now the bme 280 capture is working!
 
 lets make the 2 cron jobs
@@ -11,7 +19,6 @@ the send works just like the other one
 
 lets test send
 alright so the only thongs left to do are the hourly and 
-
 
 
 so some notes on main
