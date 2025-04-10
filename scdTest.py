@@ -6,7 +6,7 @@ i2c = board.I2C()
 scd4x = adafruit_scd4x.SCD4X(i2c)
 
 scd4x.start_periodic_measurement()
-print("Serial number:", [hex(i) for i in scd4x.serial_number])
+#print("Serial number:", [hex(i) for i in scd4x.serial_number])
 
 while True:
     if scd4x.data_ready:
