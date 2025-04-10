@@ -5,6 +5,7 @@ import csv
 import pandas as pd
 from zoneinfo import ZoneInfo
 from datetime import datetime, timezone
+from icecream import ic
 
 source = "/home/" + os.getlogin() + "/Documents/dayData/"
 
@@ -44,10 +45,12 @@ for file in csvs:
 
     #set the index as sampleDT
     df = df.set_index(headers[0])
-
+    ic(df.head())
     # each file is named with the first and last datetime
     firstTs = df.iloc[0].name
     lastTs = df.iloc[-1].name
+    ic(firstTs)
+    ic(lastTs)
     target_file_name = dt_to_fnString(firstTs) + '_' + dt_to_fnString(lastTs) + '.parquet.gzip'
 
     # save it to a folder with the name of the dd and date
