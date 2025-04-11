@@ -18,7 +18,7 @@ class aBME280:
         
         retrieve_datas = {'temp-c': self.bme280.temperature,
                             'relativeHumidity': self.bme280.relative_humidity,
-                            'pressure-pa': get_pressure_pa}
+                            'pressure-pa': self.get_pressure_pa}
 
 
         sensor_descriptors = descriptor['sensors']
