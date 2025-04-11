@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import adafruit_scd4x
 import sys
 repoPath = "/home/pi/Documents/"
@@ -11,7 +12,15 @@ class aSCD41:
         self.scd4x = adafruit_scd4x.SCD4X(bus)
         self.scd4x.start_periodic_measurement()
 
-        self.is_ready = lambda: self.scd4x.data_ready
+        #how to handle this state better?
+        #id like it to stay true for the second after it turns true
+        self.ready_till = datetime.fromtimestamp(0)
+        def ready():
+            if self.scd4x.data_ready:
+                self.ready_till = datetime.now() + timedelta(seconds=1)
+            return datetime.now() < self.ready_till
+
+        self.is_ready = ready
         
         self.get_co2 = lambda: self.scd4x.CO2
         self.get_temp = lambda: self.scd4x.temperature
