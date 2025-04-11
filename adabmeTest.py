@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 import time
+from datetime import datetime
 import board
 from adafruit_bme280 import basic as adafruit_bme280
 
@@ -17,7 +18,10 @@ bme280 = adafruit_bme280.Adafruit_BME280_I2C(i2c,  address=0x76)
 # bme280 = adafruit_bme280.Adafruit_BME280_SPI(spi, bme_cs)
 
 # change this to match the location's pressure (hPa) at sea level
+delay_micros = 1_000_000/16
 
+time.sleep(1 - datetime.now().microsecond/1_000_000)
 while True:
-    print("Pressure: %0.1f hPa" % bme280.pressure)
-    time.sleep(1/16)
+    print(f"{datetime.now()} Pressure: {bme280.pressure:.2f} hPa")
+    micros_to_delay = delay_micros - (datetime.now().microsecond % delay_micros)
+    time.sleep(micros_to_delay/1_000_000)
