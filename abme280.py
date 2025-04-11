@@ -8,7 +8,7 @@ from sensor import Sensor
 class aBME280:
     def __init__(self, bus, descriptor, debug_lvl):
         print('starting a bme!')
-        self.bme280 = adafruit_bme280.Adafruit_BME280_I2C(bus)
+        self.bme280 = adafruit_bme280.Adafruit_BME280_I2C(bus, address=0x76)
         
         self.is_ready = lambda: True
 
