@@ -10,6 +10,8 @@ class aSCD41:
         print('starting a SCD41!')
         self.scd4x = adafruit_scd4x.SCD4X(i2c)
         self.scd4x.start_periodic_measurement()
+
+        self.is_ready = lambda: scd4x.data_ready
         
         self.get_co2 = lambda: self.scd4x.read_measurement()[0]
         self.get_temp = lambda: self.scd4x.read_measurement()[1]
@@ -29,5 +31,5 @@ class aSCD41:
                 'scd41',
                 s,
                 'internal']
-            sen = sensor(sensor_descriptors[s], retrieve_datas[s], dd, debug_lvl)
+            sen = sensor(sensor_descriptors[s], retrieve_datas[s], self.is_ready, dd, debug_lvl)
             self.sensors.append(sen)

@@ -46,15 +46,15 @@ i2c_sensor_descriptor = {
         'manufacturer': 'Sensirion',
         'sensors': {
             'temp-c': {
-                'hz': 1,
+                'hz': .5,
                 'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'temp-c!float32!float32!afloat8']
             },
             'relativeHumidity': {
-                'hz': 1,
+                'hz': .5,
                 'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'relativeHumidity!float32!float32!afloat5']
             },
             'co2-ppm': {
-                'hz': 1,
+                'hz': .5,
                 'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz16', 'co2-ppm!int32!int32!aint']
             }
         }

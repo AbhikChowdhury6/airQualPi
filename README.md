@@ -4,7 +4,9 @@ TODO
 - figure out how to get the write code to work with the SMBUS i2c bus
 - repeat the sensor and read data functions, but moudularize it more
 
-
+a few whitngs to do
+- implement a way for read data to check if the data is ready
+- handle hz less than 1
 
 so now the bme 280 capture is working!
 

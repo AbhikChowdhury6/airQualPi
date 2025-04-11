@@ -13,14 +13,12 @@ from writeWorker import write_worker
 
 
 class Sensor:
-    def __init__(self, config, retrieve_data, dd, debug_lvl):
+    def __init__(self, config, retrieve_data, is_ready, dd, debug_lvl):
         print('starting sensor!')
         sys.stdout.flush()
         self.dd = dd
-        self.retrieve_data = retrieve_data
-        _ = retrieve_data # a warmup reading
         self.hz = config['hz']
-        self.delay_micros = 1_000_000/self.hz
+        self.delay_micros = int(1_000_000/self.hz)
         self.config = config
         self.torch_dtype = getattr(torch, config['col_names'][1].split('!')[1])
         self.pandas_dtype = config['col_names'][1].split('!')[2]
@@ -40,19 +38,33 @@ class Sensor:
         self.write_process.start()
 
         self.retrive_after = datetime.fromtimestamp(0, tz=timezone.utc)
+
+        self.is_ready = is_ready
+        self.retrieve_data = retrieve_data
+        while not self.is_ready():
+            print("Waiting for data...")
+            time.sleep(delay_micros/1_000_000)
+        _ = retrieve_data() # a warmup reading
     
     def read_data(self):
         #check if it's the right time
         now = datetime.now().astimezone(ZoneInfo("UTC"))
         if now >= self.retrive_after:
+            #wait till the next timestep
             dm = self.delay_micros - (now.microsecond % self.delay_micros)
             self.retrive_after = now + timedelta(microseconds=dm)
 
-            rounded_down_micros = (now.microsecond//self.delay_micros) * self.delay_micros
-            now = now.replace(microsecond=int(rounded_down_micros))
-            #print(now)
-            #sys.stdout.flush()
-            new_data = self.retrieve_data
+            if not self.is_ready():
+                continue
+            
+            #round ts
+            if self.hz <= 1:
+                now = now.replace(microsecond=0)
+            else:
+                rounded_down_micros = (now.microsecond//self.delay_micros) * self.delay_micros
+                now = now.replace(microsecond=int(rounded_down_micros))
+
+            new_data = self.retrieve_data()
             
             if self.rounding_bits == 0:
                 self.buffer.append(int(new_data), now)

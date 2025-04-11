@@ -9,8 +9,12 @@ class aBME280:
     def __init__(self, bus, descriptor, debug_lvl):
         print('starting a bme!')
         self.bme280 = adafruit_bme280.Adafruit_BME280_I2C(bus)
-        def get_pressure_pa():
-            return self.bme280.pressure * 100
+        
+        self.is_ready = lambda: True
+
+        self.get_temp_c = lambda: self.bme280.temperature
+        self.get_elative_humidity = lambda: self.bme280.relative_humidity
+        self.get_pressure_pa = lambda: self.bme280.pressure * 100
         
         retrieve_datas = {'temp-c': self.bme280.temperature,
                             'relativeHumidity': self.bme280.relative_humidity,
@@ -26,7 +30,7 @@ class aBME280:
                 'bme280',
                 s,
                 'internal']
-            sen = Sensor(sensor_descriptors[s], retrieve_datas[s], dd, debug_lvl)
+            sen = Sensor(sensor_descriptors[s], retrieve_datas[s], self.is_ready, dd, debug_lvl)
             self.sensors.append(sen)
 
         
