@@ -55,7 +55,7 @@ class Sensor:
             self.retrive_after = now + timedelta(microseconds=dm)
 
             if not self.is_ready():
-                continue
+                return
             
             #round ts
             if self.hz <= 1:
