@@ -13,9 +13,9 @@ class aSCD41:
 
         self.is_ready = lambda: self.scd4x.data_ready
         
-        self.get_co2 = lambda: self.scd4x.read_measurement()[0]
-        self.get_temp = lambda: self.scd4x.read_measurement()[1]
-        self.get_humidity = lambda: self.scd4x.read_measurement()[2]
+        self.get_co2 = lambda: self.scd4x.CO2
+        self.get_temp = lambda: self.scd4x.temperature
+        self.get_humidity = lambda: self.scd4x.relative_humidity
         
         retrieve_datas = {'temp-c': self.get_temp,
                             'relativeHumidity': self.get_humidity,
