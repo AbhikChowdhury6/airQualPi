@@ -16,6 +16,9 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
 
     last_update_time = datetime.fromtimestamp(0, tz=timezone.utc)
     while True:
+        if exitSignal[0] == 1:
+            break
+        
         st = datetime.now()
         secondsToWait = (1 - st.microsecond/1_000_000) + .0625 # 1/16 of a sec
         #print(f"writer: waiting {secondsToWait} till {st + timedelta(seconds=secondsToWait)}")
@@ -55,8 +58,7 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
             for i, data in enumerate(ctsb.data_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]]):
                 writer.writerow([newTimestamps[i].strftime('%Y-%m-%dT%H:%M:%S.%f%z')] + data.tolist())
         
-        if exitSignal[0] == 1:
-            break
+        
             
         #honestly we could just have a cron job clean up and do the pandas conversions
     print('exiting writer for ', "_".join(deviceDescriptor))

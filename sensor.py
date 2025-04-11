@@ -82,6 +82,9 @@ class Sensor:
                 now = now.replace(microsecond=int(rounded_down_micros))
 
             new_data = self.retrieve_data()
+
+            if new_data is None:
+                return
             
             if self.rounding_bits == 0:
                 self.buffer.append(int(new_data), now)

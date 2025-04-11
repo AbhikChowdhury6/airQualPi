@@ -10,16 +10,29 @@ class aPMSA003I:
     def __init__(self, bus, descriptor, debug_lvl):
         print('starting a SCD41!')
         self.pm25 = PM25_I2C(bus, None)
-
-        self.curr_data = 0
-        self.fresh_till = 0
-        #TODO figure out how to keep state and 
+        
         self.is_ready = lambda: True
         
-        self.get_envpm1um = lambda: self.aqdata["particles 03um"]
-        self.get_envpm2p5um = lambda: self.aqdata["particles 03um"]
-        self.get_envpm10um = lambda: self.aqdata["particles 03um"]
-        self.get_gtpm0p3um = lambda: self.aqdata["particles 03um"]
+        self.fresh_till = datetime.fromtimestamp(0)
+        self.aqdata = None
+        def get_aqdata_field(s):
+            # if data expired refresh
+            now = datetime.now()
+            if now <= self.fresh_till:
+                return self.aqdata[s]
+            
+            try:
+                self.aqdata = self.pm25.read()
+                self.fresh_till = now + timedelta(seconds=1)
+            except RuntimeError:
+                print("Unable to read from sensor")
+                return None
+            return self.aqdata[s]
+
+        self.get_envpm1um = lambda: get_aqdata_field("pm10 env")
+        self.get_envpm2p5um = lambda: get_aqdata_field("pm25 env")
+        self.get_envpm10um = lambda: get_aqdata_field("pm100 env")
+        self.get_gtpm0p3um = lambda: get_aqdata_field("particles 03um")
         
         retrieve_datas = {'envpm1um-ugperm3': self.get_envpm1um,
                             'envpm2.5um-ugperm3': self.get_envpm2p5um,
