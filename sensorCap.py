@@ -26,16 +26,16 @@ i2c_sensor_descriptor = {
         'manufacturer': 'Bosch',
         'sensors': {
             'temp-c': {
-                'hz': 1,
-                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'temp-c!float32!float32!afloat8']
+                'hz': 2**0,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz0', 'temp-c!float32!float32!afloat8']
             },
             'relativeHumidity': {
-                'hz': 1,
-                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'relativeHumidity!float32!float32!afloat5']
+                'hz': 2**0,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz0', 'relativeHumidity!float32!float32!afloat5']
             },
             'pressure-pa': {
                 'hz': 2**4,
-                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz16', 'pressure-pa!int32!int32!aint']
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz4', 'pressure-pa!int32!int32!aint']
             }
         }
     }, 
@@ -46,16 +46,16 @@ i2c_sensor_descriptor = {
         'manufacturer': 'Sensirion',
         'sensors': {
             'temp-c': {
-                'hz': .25,
-                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'temp-c!float32!float32!afloat8']
+                'hz': 2**-2,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz-2', 'temp-c!float32!float32!afloat8']
             },
             'relativeHumidity': {
-                'hz': .25,
-                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz1', 'relativeHumidity!float32!float32!afloat5']
+                'hz': 2**-2,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz-2', 'relativeHumidity!float32!float32!afloat5']
             },
             'co2-ppm': {
-                'hz': .25,
-                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz16', 'co2-ppm!int32!int32!aint']
+                'hz': 2**-2,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz-2', 'co2-ppm!int32!int32!aint']
             }
         }
     }#, 
