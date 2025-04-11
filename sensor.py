@@ -30,7 +30,8 @@ class Sensor:
 
         #print(self.hz, self.dtype)
         #sys.stdout.flush()
-        self.buffer = CircularTimeSeriesBuffers(self.hz, self.torch_dtype)
+        buff_len = self.hz if self.hz > 1 else 1
+        self.buffer = CircularTimeSeriesBuffers(buff_len, self.torch_dtype)
 
         self.write_exit_signal = torch.zeros(1, dtype=torch.int32).share_memory_()
         writeArgs = [self.buffer, self.dd, self.config['col_names'], self.debug_lvl, self.write_exit_signal]
