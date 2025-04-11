@@ -77,7 +77,7 @@ i2c_sensor_descriptor = {
                 'hz': 2**-2,
                 'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz-2', 'envpm10um-ugperm3!int32!int32!aint']
             },
-            'pm0.3um-per.1L': {
+            'gtpm0.3um-per.1l': {
                 'hz': 2**-2,
                 'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz-2', 'gtpm0.3um-per.1l!int32!int32!aint']
             },

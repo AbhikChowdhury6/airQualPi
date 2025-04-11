@@ -8,7 +8,7 @@ from sensor import Sensor
 
 class aPMSA003I:
     def __init__(self, bus, descriptor, debug_lvl):
-        print('starting a SCD41!')
+        print('starting a PMSA003I!')
         self.pm25 = PM25_I2C(bus, None)
         
         self.is_ready = lambda: True
@@ -38,7 +38,6 @@ class aPMSA003I:
                             'envpm2.5um-ugperm3': self.get_envpm2p5um,
                             'envpm10um-ugperm3': self.get_envpm10um,
                             'gtpm0.3um-per.1l': self.get_gtpm0p3um}
-
 
         sensor_descriptors = descriptor['sensors']
         self.sensors = []
