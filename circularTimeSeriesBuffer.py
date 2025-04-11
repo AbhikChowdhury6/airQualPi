@@ -5,6 +5,11 @@ import sys
 
 
 # make num buffers dynamic
+# is there a way to make them work by insertion and not time?
+# when the writer goes to read they'll only know the current time
+# the writer could always check if the datetime is greater than the last one it wrote
+# and still check every second, a bit of a workaround but eh
+
 # let's use 5 1 second buffers to be safe and make sure we're not losing anything
 class CircularTimeSeriesBuffers:
     def __init__(self, hz, DTYPE, length=1, numBuffs = 5):
