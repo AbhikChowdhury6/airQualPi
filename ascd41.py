@@ -8,7 +8,7 @@ from sensor import Sensor
 class aSCD41:
     def __init__(self, bus, descriptor, debug_lvl):
         print('starting a SCD41!')
-        self.scd4x = adafruit_scd4x.SCD4X(i2c)
+        self.scd4x = adafruit_scd4x.SCD4X(bus)
         self.scd4x.start_periodic_measurement()
 
         self.is_ready = lambda: scd4x.data_ready
