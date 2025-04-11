@@ -55,7 +55,7 @@ class Sensor:
             time.sleep(self.delay_micros/1_000_000)
         _ = self.retrieve_data() # a warmup reading
     
-    def _round_data(new_data):
+    def _round_data(self, new_data):
         rounded_data = int(new_data)
         this_trillionths = int((new_data%1) * 1_000_000_000_000)
         floord =  (this_trillionths // self.trillionths)  *  self.trillionths
@@ -109,7 +109,7 @@ class Sensor:
             #we need 5 didgits to prefecly define afloat 5 and same for 6 and 7 and 8
             # honestly let's just handle up to 9 bits of rounding for now and that should even cover our quats ok
             npd = np.array(new_data)
-            npd = np.vectorize(_round_data)(npd)
+            npd = np.vectorize(self._round_data)(npd)
 
             self.buffer.append(npd, now)
         
