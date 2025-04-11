@@ -8,7 +8,7 @@ from sensor import Sensor
 
 class aSCD41:
     def __init__(self, bus, descriptor, debug_lvl):
-        print('starting a SCD41!')
+        print('starting a ' + descriptor['deviceName'] + '!')
         self.scd4x = adafruit_scd4x.SCD4X(bus)
         self.scd4x.start_periodic_measurement()
 
@@ -37,7 +37,7 @@ class aSCD41:
             dd = [descriptor['responsiblePartyName'],
                 descriptor['instanceName'],
                 descriptor['manufacturer'],
-                'scd41',
+                descriptor['deviceName'],
                 s,
                 'internal']
             sen = Sensor(sensor_descriptors[s], retrieve_datas[s], self.is_ready, dd, debug_lvl)

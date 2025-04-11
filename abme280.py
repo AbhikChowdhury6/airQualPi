@@ -7,7 +7,7 @@ from sensor import Sensor
 
 class aBME280:
     def __init__(self, bus, descriptor, debug_lvl):
-        print('starting a bme!')
+        print('starting a ' + descriptor['deviceName'] + '!')
         self.bme280 = adafruit_bme280.Adafruit_BME280_I2C(bus, address=0x76)
         
         self.is_ready = lambda: True
@@ -27,7 +27,7 @@ class aBME280:
             dd = [descriptor['responsiblePartyName'],
                 descriptor['instanceName'],
                 descriptor['manufacturer'],
-                'bme280',
+                descriptor['deviceName'],
                 s,
                 'internal']
             sen = Sensor(sensor_descriptors[s], retrieve_datas[s], self.is_ready, dd, debug_lvl)

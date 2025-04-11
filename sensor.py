@@ -29,7 +29,7 @@ class Sensor:
         self.config = config
         self.torch_dtype = getattr(torch, config['col_names'][1].split('!')[1])
         self.pandas_dtype = config['col_names'][1].split('!')[2]
-        self.abc1_dtype = config['col_names'][1].split('!')[3]
+        self.abc1_dtype = config['col_names'][1].split('!')[3] # codec I'm working on
         matches = re.findall(r'-?\d+', self.abc1_dtype)
         self.rounding_bits = int(matches[-1]) if matches else 0
         self.billionths = 1_000_000_000/(2**self.rounding_bits)
