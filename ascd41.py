@@ -11,7 +11,7 @@ class aSCD41:
         self.scd4x = adafruit_scd4x.SCD4X(bus)
         self.scd4x.start_periodic_measurement()
 
-        self.is_ready = lambda: scd4x.data_ready
+        self.is_ready = lambda: self.scd4x.data_ready
         
         self.get_co2 = lambda: self.scd4x.read_measurement()[0]
         self.get_temp = lambda: self.scd4x.read_measurement()[1]
