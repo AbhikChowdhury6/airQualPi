@@ -13,11 +13,11 @@ class aBME280:
         self.is_ready = lambda: True
 
         self.get_temp_c = lambda: self.bme280.temperature
-        self.get_elative_humidity = lambda: self.bme280.relative_humidity
+        self.get_relative_humidity = lambda: self.bme280.relative_humidity
         self.get_pressure_pa = lambda: self.bme280.pressure * 100
         
-        retrieve_datas = {'temp-c': self.bme280.temperature,
-                            'relativeHumidity': self.bme280.relative_humidity,
+        retrieve_datas = {'temp-c': self.get_temp_c,
+                            'relativeHumidity': self.get_relative_humidity,
                             'pressure-pa': self.get_pressure_pa}
 
 
