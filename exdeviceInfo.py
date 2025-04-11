@@ -88,7 +88,7 @@ pmsa003i_sd = {
     }
 }
 
-i2c_sensor_descriptor = {} # add the element in the bme dict and the scd41 dict
-i2c_sensor_descriptor.update(bme280_sd)
-i2c_sensor_descriptor.update(scd41_sd)
-i2c_sensor_descriptor.update(pmsa003i_sd)
+i2c_sensor_descriptors = {} # add the element in the bme dict and the scd41 dict
+i2c_sensor_descriptors.update(bme280_sd)
+i2c_sensor_descriptors.update(scd41_sd)
+i2c_sensor_descriptors.update(pmsa003i_sd)

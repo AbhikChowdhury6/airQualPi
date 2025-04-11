@@ -4,6 +4,7 @@ import time
 
 import torch
 import torch.multiprocessing as mp
+import numpy as np
 
 import sys
 from icecream import ic
@@ -32,7 +33,7 @@ class Sensor:
         self.abc1_dtype = config['col_names'][1].split('!')[3] # codec I'm working on
         matches = re.findall(r'-?\d+', self.abc1_dtype)
         self.rounding_bits = int(matches[-1]) if matches else 0
-        self.billionths = 1_000_000_000/(2**self.rounding_bits)
+        self.trillionths = 1_000_000_000_000/(2**self.rounding_bits)
         self.debug_lvl = debug_lvl
 
         #print(self.hz, self.dtype)
@@ -54,6 +55,18 @@ class Sensor:
             time.sleep(self.delay_micros/1_000_000)
         _ = self.retrieve_data() # a warmup reading
     
+    def _round_data(new_data):
+        rounded_data = int(new_data)
+        this_trillionths = int((new_data%1) * 1_000_000_000_000)
+        floord =  (this_trillionths // self.trillionths)  *  self.trillionths
+        error =  this_trillionths - floord
+        
+        if error >= self.trillionths/2:
+            rounded_data += (floord + self.trillionths)/1_000_000_000_000
+        else:
+            rounded_data += floord/1_000_000_000_000
+        return rounded_data
+
     def read_data(self):
         # i'd like it to automatically wait till the rounded hz seconds
         # up to 128 seconds
@@ -87,26 +100,16 @@ class Sensor:
                 return
             
             if self.rounding_bits == 0:
-                self.buffer.append(int(new_data), now)
+                #make a tensor out of the data I think
+                self.buffer.append(new_data, now)
                 return 
 
             #ic(new_data)
             #sys.stdout.flush()
             #we need 5 didgits to prefecly define afloat 5 and same for 6 and 7 and 8
             # honestly let's just handle up to 9 bits of rounding for now and that should even cover our quats ok
-            
-            rounded_data = int(new_data)
-            this_billionths = int((new_data%1) * 1_000_000_000)
-            floord =  (this_billionths // self.billionths)  *  self.billionths
-            error =  this_billionths - floord
-            
-            if error >= self.billionths/2:
-                rounded_data += (floord + self.billionths)/1_000_000_000
-            else:
-                rounded_data += floord/1_000_000_000
-            
-            #ic(this_billionths, floord, error)
-            #ic(rounded_data)
-            
-            self.buffer.append(rounded_data, now)
+            npd = np.array(new_data)
+            npd = np.vectorize(_round_data)(npd)
+
+            self.buffer.append(npd, now)
         

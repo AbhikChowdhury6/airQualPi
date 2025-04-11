@@ -10,7 +10,7 @@ repoPath = "/home/pi/Documents/"
 sys.path.append(repoPath + "airQualPi/")
 from i2cController import I2C_BUS
 if os.path.exists(repoPath + "airQualPi/deviceInfo.py"):
-    from deviceInfo import debug_lvl, i2c_sensor_descriptor
+    from deviceInfo import debug_lvl, i2c_sensor_descriptors
 else:
     print('no device config found. exiting')
     sys.exit()
@@ -18,7 +18,7 @@ else:
 
 exit_signal = torch.zeros(1, dtype=torch.int32).share_memory_()
 
-i2c_process = mp.Process(target=I2C_BUS, args=(i2c_sensor_descriptor, debug_lvl, exit_signal))
+i2c_process = mp.Process(target=I2C_BUS, args=(i2c_sensor_descriptors, debug_lvl, exit_signal))
 i2c_process.start()
 
 processes = {}
