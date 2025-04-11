@@ -19,7 +19,7 @@ class aSCD41:
         
         retrieve_datas = {'temp-c': self.get_temp,
                             'relativeHumidity': self.get_humidity,
-                            'co2-ppm-pa': self.get_co2}
+                            'co2-ppm': self.get_co2}
 
 
         sensor_descriptors = descriptor['sensors']
