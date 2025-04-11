@@ -31,5 +31,5 @@ class aSCD41:
                 'scd41',
                 s,
                 'internal']
-            sen = sensor(sensor_descriptors[s], retrieve_datas[s], self.is_ready, dd, debug_lvl)
+            sen = Sensor(sensor_descriptors[s], retrieve_datas[s], self.is_ready, dd, debug_lvl)
             self.sensors.append(sen)
