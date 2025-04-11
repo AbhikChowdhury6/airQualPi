@@ -16,6 +16,8 @@ sys.path.append(repoPath + "airQualPi/")
 from circularTimeSeriesBuffer import CircularTimeSeriesBuffers
 from writeWorker import write_worker
 
+def secs_since_midnight(dt):
+    return (dt - dt.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds()
 
 class Sensor:
     def __init__(self, config, retrieve_data, is_ready, dd, debug_lvl):
@@ -53,8 +55,17 @@ class Sensor:
         _ = self.retrieve_data() # a warmup reading
     
     def read_data(self):
+        # i'd like it to automatically wait till the rounded hz seconds
+        # up to 128 seconds
+        # calc the offset seconds from the start of the day
+
         #check if it's the right time
         now = datetime.now().astimezone(ZoneInfo("UTC"))
+
+        # wait till the rounded hz seconds 
+        if self.hz < 1 and int(secs_since_midnight) % int(self.delay_micros/1_000_000) != 0:
+            continue
+
         if now >= self.retrive_after:
             #wait till the next timestep
             dm = self.delay_micros - (now.microsecond % self.delay_micros)
