@@ -1,4 +1,5 @@
 import board
+import busio
 import time
 from datetime import datetime, timedelta
 
@@ -33,7 +34,7 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
     sys.stdout.flush()
 
     # init a bus using smbus2
-    I2C_BUS = board.I2C() 
+    I2C_BUS = busio.I2C(board.SCL, board.SDA, frequency=100000) 
     sensors = []
     devices = []
     for device in bus_descriptor:
