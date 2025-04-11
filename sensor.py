@@ -63,7 +63,7 @@ class Sensor:
         now = datetime.now().astimezone(ZoneInfo("UTC"))
 
         # wait till the rounded hz seconds 
-        if self.hz < 1 and int(secs_since_midnight) % int(self.delay_micros/1_000_000) != 0:
+        if self.hz < 1 and int(secs_since_midnight(now)) % int(self.delay_micros/1_000_000) != 0:
             return
 
         if now >= self.retrive_after:
