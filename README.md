@@ -1,3 +1,15 @@
+getting set up 
+pip3 install adafruit-circuitpython-scd4x
+pip3 install adafruit-circuitpython-pm25
+pip3 install adafruit-circuitpython-bme280
+pip3 install lgpio
+
+
+crontab
+2 17 * * * /home/pi/miniforge3/envs/vision/bin/python3.12 /home/pi/Documents/airQualPi/send.py
+1 * * * * /home/pi/miniforge3/envs/vision/bin/python3.12 /home/pi/Documents/airQualPi/toDataFrames.py
+
+
 Alright some new notes about the process of adding another sensor type
 TODO
 - make a new file (ascd41.py) and class (aSCD41) for the new sensor 
