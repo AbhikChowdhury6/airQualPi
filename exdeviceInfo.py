@@ -36,6 +36,34 @@ bme280_sd = {
     }
 }
 
+bme680_sd = {
+    "abme680": {
+        'class_name':'aBME680',
+        'responsiblePartyName': 'abhik',
+        'instanceName': instance_name,
+        'manufacturer': 'Bosch',
+        'deviceName': "bme680",
+        'sensors': {
+            'temp-c': {
+                'hz': 2**0,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz0', 'temp-c!float32!float32!afloat8']
+            },
+            'relativeHumidity': {
+                'hz': 2**0,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz0', 'relativeHumidity!float32!float32!afloat5']
+            },
+            'pressure-pa': {
+                'hz': 2**4,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz4', 'pressure-pa!int32!int32!aint']
+            },
+            'voc-ohm': {
+                'hz': 2**0,
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz4', 'pressure-pa!int32!int32!aint']
+            },
+        }
+    }
+}
+
 scd41_sd = {
     "ascd41": {
         'class_name':'aSCD41',
