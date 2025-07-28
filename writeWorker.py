@@ -42,7 +42,7 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
             os.mkdir(day_folder)
 
         minute_file_name = day_folder + "_".join(deviceDescriptor) + "_" +\
-                        newTimestamps[0].strftime('%Y-%m-%dT%H%M%z') + '.csv'
+                        newTimestamps[0].strftime('%Y-%m-%dT%H%z') + '.csv'
 
         is_new_file = not os.path.exists(minute_file_name)
         
