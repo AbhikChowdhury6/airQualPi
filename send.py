@@ -41,7 +41,7 @@ logger.addHandler(handler)
 print(f"the time started is {datetime.now()}")
 # logger.info(f"the time started is {datetime.now()}")
 
-serverip = "10.0.0.12"
+serverip = "192.168.20.64"
 
 pathToCollectedData = "/home/" + os.getlogin() + "/Documents/sensorData/"
 
