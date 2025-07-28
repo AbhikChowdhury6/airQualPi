@@ -13,6 +13,7 @@ pip3 install adafruit-circuitpython-bme280
 pip3 install adafruit-circuitpython-bme680
 pip3 install lgpio
 
+mkdir /home/pi/Documents/dayData
 mkdir /home/pi/Documents/sensorData
 
 crontab -e

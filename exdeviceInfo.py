@@ -58,7 +58,7 @@ bme680_sd = {
             },
             'voc-ohm': {
                 'hz': 2**0,
-                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz4', 'pressure-pa!int32!int32!aint']
+                'col_names': ['sampleDT!int64!datetime64[ns]!audelayhz0', 'voc-ohm!int32!int32!aint']
             },
         }
     }
