@@ -28,5 +28,10 @@ df = pd.read_csv(
     skiprows=5,               # Skip the original header
     names=headers,
     dtype=dtype_map,
-    parse_dates=datetime_cols
+    parse_dates=datetime_cols,
 )
+df = df.set_index(headers[0])
+df.index = pd.to_datetime(df.index, utc=True, format='ISO8601')
+df = df.dropna()
+
+print(df)

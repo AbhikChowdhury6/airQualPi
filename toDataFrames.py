@@ -56,6 +56,7 @@ for file in csvs:
     #set the index as sampleDT
     df = df.set_index(headers[0])
     df.index = pd.to_datetime(df.index, utc=True, format='ISO8601')
+    df = df.dropna()
     #ic(df.dtypes)
     #ic(df.head())
     # each file is named with the first and last datetime
