@@ -22,6 +22,7 @@ curr_ext = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H%z') + ".csv"
 # for every csv
 csvs = sorted(os.listdir(source))
 for file in csvs:
+    print(file)
     if file.split('_')[-1] == curr_ext:
         continue
     # getting the first row of the csv that contains the header
