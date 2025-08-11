@@ -16,6 +16,14 @@ os.makedirs(destination, exist_ok=True)
 #to to fnstring
 def dt_to_fnString(dt):
     return dt.astimezone(ZoneInfo("UTC")).strftime('%Y-%m-%dT%H%M%S,%f%z')
+def to_nullable_dtype(tok: str) -> str:
+    if not tok: return tok
+    t = tok.lower()
+    if t.startswith("int"):   return "I" + t[1:]      # int32 -> Int32
+    if t.startswith("float"): return "F" + t[1:]     # float64 -> Float64
+    if t in ("bool","boolean"): return "boolean"
+    if t == "string": return "string"                # pandas StringDtype
+    return tok
 
 
 curr_ext = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H%z') + ".csv"
@@ -33,7 +41,7 @@ for file in csvs:
     # we're going to parse out the pandas data types
     pandas_dtypes = [s.split('!')[2] for s in headers]
     datetime_cols = [col for col, dtype in zip(headers, pandas_dtypes) if dtype == "datetime64[ns]"]
-    dtype_map = {col: dtype for col, dtype in zip(headers, pandas_dtypes) if dtype != "datetime64[ns]"}
+    dtype_map = {col: to_nullable_dtype(dtype) for col, dtype in zip(headers, pandas_dtypes) if dtype != "datetime64[ns]"}
     #ic(datetime_cols, dtype_map, pandas_dtypes)
 
     # read it in as a dataframe with the types
