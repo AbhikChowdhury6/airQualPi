@@ -48,6 +48,8 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
         devices.append(newDevice)
         sensors += newDevice.sensors
 
+    print(f"the number of sensors is {len(sensors)}")
+    sys.stdout.flush()
 
     max_hz = max(s.hz for s in sensors)
     # works perfectly up to 64 hz
@@ -57,6 +59,8 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
     time.sleep(1 - datetime.now().microsecond/1_000_000)
     while True:
         for sensor in sensors:
+            print("trying to read data")
+            sys.stdout.flush()
             sensor.read_data()
 
         if any(not s.write_process.is_alive() for s in sensors) or exitSignal[0] == 1:
