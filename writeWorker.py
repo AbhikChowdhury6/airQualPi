@@ -20,7 +20,7 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
             break
         
         st = datetime.now()
-        secondsToWait = (1 - st.microsecond/1_000_000) + .0625 # 1/16 of a sec
+        secondsToWait = (1 - st.microsecond/1_000_000) + .03125 # 1/32 of a sec
         #print(f"writer: waiting {secondsToWait} till {st + timedelta(seconds=secondsToWait)}")
         time.sleep(secondsToWait)
 
@@ -29,21 +29,28 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
         lastBuffNum = ((ctsb.bn[0] + (ctsb.numBuffs[0]-1)) % ctsb.numBuffs[0]).clone()
 
         if ctsb.lengths[lastBuffNum][0] == 0:
+                print('no data in buffer')
+                sys.stdout.flush()
                 continue
         
         newTimestamps = intTensorToDtList(ctsb.time_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]])
         
         if newTimestamps[-1] <= last_update_time:
+            print('no new data')
+            sys.stdout.flush()
             continue
         last_update_time = newTimestamps[-1] 
 
         day_folder = repoPath + 'dayData/'
         if not os.path.exists(day_folder):
+            print('creating day folder')
+            sys.stdout.flush()
             os.mkdir(day_folder)
 
         minute_file_name = day_folder + "_".join(deviceDescriptor) + "_" +\
                         newTimestamps[0].strftime('%Y-%m-%dT%H%z') + '.csv'
-
+        print('writing to file: ' + minute_file_name)
+        sys.stdout.flush()
         is_new_file = not os.path.exists(minute_file_name)
         
         # other popular types float64, int64, float32, int32
