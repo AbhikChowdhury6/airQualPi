@@ -72,6 +72,8 @@ class Sensor:
         # up to 128 seconds
         # calc the offset seconds from the start of the day
 
+        print("reading data")
+        sys.stdout.flush()
         #check if it's the right time
         now = datetime.now().astimezone(ZoneInfo("UTC"))
 
@@ -85,6 +87,8 @@ class Sensor:
             self.retrive_after = now + timedelta(microseconds=dm)
 
             if not self.is_ready():
+                print("the sensor wasn't ready to read")
+                sys.stdout.flush()
                 return
             
             #round ts
@@ -97,8 +101,11 @@ class Sensor:
             new_data = self.retrieve_data()
 
             if new_data is None:
+                print("new data was none")
                 return
             
+            print("new data: ", new_data)
+            sys.stdout.flush()
             if self.rounding_bits == 0:
                 #make a tensor out of the data I think
                 self.buffer.append(new_data, now)
