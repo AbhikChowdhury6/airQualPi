@@ -38,6 +38,7 @@ def I2C_BUS(bus_descriptor, debug_lvl, exitSignal):
     sensors = []
     devices = []
     for device in bus_descriptor:
+        print(f"loading {device}")
         newDevice = load_class_and_instantiate(
             class_loc + device + '.py',
             bus_descriptor[device]['class_name'],

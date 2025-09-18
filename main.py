@@ -32,6 +32,8 @@ while True:
         exit_signal[0] = 1
         break
 
+    print(f"i2c proccess is {processes[0].is_alive()}")
+
 
     if select.select([sys.stdin], [], [], 0)[0]:
         if sys.stdin.read(1) == 'q':
