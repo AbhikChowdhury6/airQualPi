@@ -33,6 +33,9 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
         
         newTimestamps = intTensorToDtList(ctsb.time_buffers[lastBuffNum][:ctsb.lengths[lastBuffNum][0]])
         
+        if len(newTimestamps) == 0:
+            continue
+
         if newTimestamps[-1] <= last_update_time:
             continue
         last_update_time = newTimestamps[-1] 
