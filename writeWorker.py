@@ -47,12 +47,14 @@ def write_worker(ctsb: CircularTimeSeriesBuffers, deviceDescriptor, colNames,
         minute_file_name = day_folder + "_".join(deviceDescriptor) + "_" +\
                         newTimestamps[0].strftime('%Y-%m-%dT%H%z') + '.csv'
 
-        is_new_file = not os.path.exists(minute_file_name)
+        file_exists = os.path.exists(minute_file_name)
+        is_empty = (os.path.getsize(minute_file_name) == 0) if file_exists else True
+        needs_header = (not file_exists) or is_empty
         
         # other popular types float64, int64, float32, int32
         with open(minute_file_name, "a", newline="") as f:
             writer = csv.writer(f)
-            if is_new_file:  # Write headers only if file is new
+            if needs_header:  # Write headers if file is new or empty
                 # print('writing cols!')
                 print('new file! ' + minute_file_name)
                 sys.stdout.flush()
