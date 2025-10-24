@@ -39,6 +39,7 @@ for file in csvs:
         headers = next(reader)
 
     # we're going to parse out the pandas data types
+    ic(headers)
     pandas_dtypes = [s.split('!')[2] for s in headers]
     datetime_cols = [col for col, dtype in zip(headers, pandas_dtypes) if dtype == "datetime64[ns]"]
     dtype_map = {col: to_nullable_dtype(dtype) for col, dtype in zip(headers, pandas_dtypes) if dtype != "datetime64[ns]"}
