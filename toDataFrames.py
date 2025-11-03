@@ -51,13 +51,15 @@ for file in csvs:
         skiprows=1,               # Skip the original header
         names=headers,
         dtype=dtype_map,
-        parse_dates=datetime_cols
+        on_bad_lines='skip',      # Skip malformed rows
+        engine='python'           # Ensure on_bad_lines works reliably
     )
 
     #set the index as sampleDT
     df = df.set_index(headers[0])
-    df.index = pd.to_datetime(df.index, utc=True, format='ISO8601')
-    df = df.dropna()
+    # Coerce invalid timestamps to NaT and drop them
+    df.index = pd.to_datetime(df.index, utc=True, format='ISO8601', errors='coerce')
+    df = df[~df.index.isna()].dropna()
     #ic(df.dtypes)
     #ic(df.head())
     # each file is named with the first and last datetime
